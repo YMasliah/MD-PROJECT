@@ -8,6 +8,7 @@ public class GameCore{
 	}
 	
 	private static GameCore INSTANCE;
+	
 	double velocityX, velocityY; // informations relatives à l'oiseau
 	double gravity; // gravité
 	String message; // message à afficher en haut de l'écran
@@ -52,8 +53,8 @@ public class GameCore{
 	}
 
 	public void launchBird(int x, int y) {
-		velocityX = (AngryBirds.GMODE.getBirdX() - x) / 20.0;
-		velocityY = (AngryBirds.GMODE.getBirdY() - y) / 20.0;
+		velocityX = (AngryBirds.GAMEMODE.getBirdX() - x) / 20.0;
+		velocityY = (AngryBirds.GAMEMODE.getBirdY() - y) / 20.0;
 		status = Status.processing;
 		message = "L'oiseau prend sont envol";
 	}

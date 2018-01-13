@@ -21,7 +21,7 @@ public class Runner implements Runnable {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 			}
-			AngryBirds.GMODE.work();
+			AngryBirds.GAMEMODE.work();
 		}
 	}
 }
