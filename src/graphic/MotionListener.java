@@ -7,18 +7,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import logic.Core;
 import logic.Core.Status;
+import main.AngryBirds;
 
 /**
  * @author masliah yann
  *
  */
-@Deprecated
-public class MotionListener implements MouseListener, MouseMotionListener {
-	private Core core = Core.getCore();
-	private GraphicCore gCore = GraphicCore.getGraphicCore();
-	
+public class MotionListener implements MouseListener, MouseMotionListener {	
 	public MotionListener() {
 	}
 
@@ -36,12 +32,12 @@ public class MotionListener implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (core.getStatus() == Status.game_over) {
-			core.init();
-		} else if (core.getStatus() == Status.playable) {
-			core.launchBird(e.getX(), e.getY());
+		if (AngryBirds.CORE.getStatus() == Status.game_over) {
+			AngryBirds.CORE.init();
+		} else if (AngryBirds.CORE.getStatus() == Status.playable) {
+			AngryBirds.CORE.launchBird(e.getX(), e.getY());
 		}
-		gCore.repaint();
+		AngryBirds.GCORE.repaint();
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -49,8 +45,8 @@ public class MotionListener implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		gCore.setPosX(e.getX());
-		gCore.setPosY(e.getY());
-		gCore.repaint();
+		AngryBirds.GCORE.setPosX(e.getX());
+		AngryBirds.GCORE.setPosY(e.getY());
+		AngryBirds.GCORE.repaint();
 	}
 }

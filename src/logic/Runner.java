@@ -11,7 +11,6 @@ import main.AngryBirds;
  */
 public class Runner  implements Runnable {
 	
-	
 	// boucle qui calcule la position de l'oiseau en vol, effectue l'affichage et
 	// teste les conditions de victoire
 	public void run() {

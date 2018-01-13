@@ -9,9 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import logic.Core.Status;
 import main.AngryBirds;
@@ -22,19 +19,21 @@ import main.AngryBirds;
  *         J'arrive pas a sortir les Listeners si je les sort. ben il veut pas
  *         repaint quand c'est le listener qui demande.
  */
-public class GraphicCore extends Panel implements MouseListener, MouseMotionListener {
+public class GraphicCore extends Panel{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private static GraphicCore INSTANCE = new GraphicCore();
+	MotionListener motionListener;
 	Image buffer; // image pour le rendu hors écran
-	int mouseX, mouseY; // position de la souris lors de la sélection
+	int posX, posY; // position de la souris lors de la sélection
 
 	GraphicCore() {
-		addMouseListener(this);
-		addMouseMotionListener(this);
+		motionListener = new MotionListener();
+		addMouseListener(motionListener);
+		addMouseMotionListener(motionListener);
 	}
 
 	public synchronized static GraphicCore getGraphicCore() {
@@ -42,38 +41,6 @@ public class GraphicCore extends Panel implements MouseListener, MouseMotionList
 			INSTANCE = new GraphicCore();
 		}
 		return INSTANCE;
-	}
-
-	// gestion des événements souris
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	public void mouseExited(MouseEvent e) {
-	}
-
-	public void mousePressed(MouseEvent e) {
-	}
-
-	public void mouseReleased(MouseEvent e) {
-		if (AngryBirds.CORE.getStatus() == Status.game_over) {
-			AngryBirds.CORE.init();
-		} else if (AngryBirds.CORE.getStatus() == Status.playable) {
-			AngryBirds.CORE.launchBird(e.getX(), e.getY());
-		}
-		repaint();
-	}
-
-	public void mouseDragged(MouseEvent e) {
-		mouseMoved(e);
-	}
-
-	public void mouseMoved(MouseEvent e) {
-		mouseX = e.getX();
-		mouseY = e.getY();
-		repaint();
 	}
 
 	// évite les scintillements
@@ -99,7 +66,7 @@ public class GraphicCore extends Panel implements MouseListener, MouseMotionList
 		// oiseau
 		g.setColor(Color.RED);
 		if (AngryBirds.CORE.getStatus() == Status.playable)
-			g.drawLine((int) AngryBirds.CORE.getBirdX(), (int) AngryBirds.CORE.getBirdY(), mouseX, mouseY); // montre l'angle et la vitesse
+			g.drawLine((int) AngryBirds.CORE.getBirdX(), (int) AngryBirds.CORE.getBirdY(), posX, posY); // montre l'angle et la vitesse
 		g.fillOval((int) AngryBirds.CORE.getBirdX() - 20, (int) AngryBirds.CORE.getBirdY() - 20, 40, 40);
 
 		// cochon
@@ -118,5 +85,22 @@ public class GraphicCore extends Panel implements MouseListener, MouseMotionList
 	// taille de la fenêtre
 	public Dimension getPreferredSize() {
 		return new Dimension(800, 600);
+	}
+	
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
 	}
 }

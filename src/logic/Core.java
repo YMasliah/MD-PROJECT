@@ -1,6 +1,5 @@
 package logic;
 
-import java.awt.Dimension;
 import main.AngryBirds;
 
 public class Core{
@@ -36,8 +35,6 @@ public class Core{
 		return INSTANCE;
 	}
 	
-
-
 	// calcule la distance entre deux points
 	static double distance(double x1, double y1, double x2, double y2) {
 		double dx = x1 - x2;
@@ -55,13 +52,6 @@ public class Core{
 		pigX = Math.random() * 500 + 200; // position aléatoire pour le cochon
 		pigY = 480;
 		message = "Choisissez l'angle et la vitesse.";
-	}
-
-	// fin de partie
-	void stop() {
-		velocityX = 0;
-		velocityY = 0;
-		setStatus(Status.game_over);
 	}
 
 	void work() {
@@ -87,12 +77,12 @@ public class Core{
 		}
 	}
 	
-	// taille de la fenêtre
-	public Dimension getPreferredSize() {
-		return new Dimension(800, 600);
+	// fin de partie
+	void stop() {
+		velocityX = 0;
+		velocityY = 0;
+		setStatus(Status.game_over);
 	}
-
-
 
 	public void launchBird(int x, int y) {
 		velocityX = (birdX - x) / 20.0;
