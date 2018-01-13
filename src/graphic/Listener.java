@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 /**
  * @author masliah yann
  *
+ *	d'apres moi c'est plus un abstract avec les methodes deja implementer
  */
 public interface Listener{
 

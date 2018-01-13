@@ -21,14 +21,22 @@ import logic.GameMode;
  * GCore = GraphicCore.getGraphicCore(DefaultInteractiveWindows)
  * ...
  */
-public class AngryBirds {
+public class AngryBirds extends Launcher {
+	/**
+	 * @throws Exception
+	 */
+	public AngryBirds() throws Exception {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public static GameCore CORE = GameCore.getGameCore();
 	public static GraphicCore GCORE = GraphicCore.getGraphicCore();
 	public static GameMode GAMEMODE = GameMode.getGameMode();
 	public static MotionListener LISTENER = MotionListener.getMotionListener();
 	
 	// met le jeu dans une fenêtre et rajoute son listener
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		Frame frame = new Frame("Oiseau pas content");
 		final GraphicCore obj = GCORE;
 		GCORE.addListener();
@@ -40,6 +48,5 @@ public class AngryBirds {
 		frame.add(obj);
 		frame.pack();
 		frame.setVisible(true);
-		
 	}
 }
