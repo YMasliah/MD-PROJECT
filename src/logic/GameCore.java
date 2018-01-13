@@ -30,12 +30,6 @@ public class GameCore{
 		return INSTANCE;
 	}
 	
-	// calcule la distance entre deux points
-	static double distance(double x1, double y1, double x2, double y2) {
-		double dx = x1 - x2;
-		double dy = y1 - y2;
-		return Math.sqrt(dx * dx + dy * dy);
-	}
 
 	// début de partie
 	public void start() {
@@ -53,8 +47,8 @@ public class GameCore{
 	}
 
 	public void launchBird(int x, int y) {
-		velocityX = (AngryBirds.GAMEMODE.getBirdX() - x) / 20.0;
-		velocityY = (AngryBirds.GAMEMODE.getBirdY() - y) / 20.0;
+		velocityX = (AngryBirds.GAMEMODE.getBird().getPosX() - x) / 20.0;
+		velocityY = (AngryBirds.GAMEMODE.getBird().getPosY() - y) / 20.0;
 		status = Status.processing;
 		message = "L'oiseau prend sont envol";
 	}

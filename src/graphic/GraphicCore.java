@@ -66,12 +66,12 @@ public class GraphicCore extends Panel{
 		// oiseau
 		g.setColor(Color.RED);
 		if (AngryBirds.CORE.getStatus() == Status.playable)
-			g.drawLine((int) AngryBirds.GAMEMODE.getBirdX(), (int) AngryBirds.GAMEMODE.getBirdY(), posX, posY); // montre l'angle et la vitesse
-		g.fillOval((int) AngryBirds.GAMEMODE.getBirdX() - 20, (int) AngryBirds.GAMEMODE.getBirdY() - 20, 40, 40);
+			g.drawLine((int) AngryBirds.GAMEMODE.getBird().getPosX(), (int) AngryBirds.GAMEMODE.getBird().getPosY(), posX, posY); // montre l'angle et la vitesse
+		g.fillOval((int) AngryBirds.GAMEMODE.getBird().getPosX() - 20, (int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40);
 
 		// cochon
 		g.setColor(Color.GREEN);
-		g.fillOval((int) AngryBirds.GAMEMODE.getPigX() - 20, (int) AngryBirds.GAMEMODE.getPigY() - 20, 40, 40);
+		g.fillOval((int) AngryBirds.GAMEMODE.getPig().getPosX() - 20, (int) AngryBirds.GAMEMODE.getPig().getPosY() - 20, 40, 40);
 
 		// messages
 		g.setColor(Color.BLACK);

@@ -3,6 +3,7 @@
  */
 package logic;
 
+import bean.Animal;
 import logic.GameCore.Status;
 import main.AngryBirds;
 
@@ -11,9 +12,9 @@ import main.AngryBirds;
  *
  */
 public class GameMode {
-	double birdX, birdY;
-	double pigX, pigY; // informations relatives au cochon
-	
+
+	Animal bird;
+	Animal pig;
 	private static GameMode INSTANCE;
 	
 	GameMode(){
@@ -36,26 +37,26 @@ public class GameMode {
 	// début de partie
 	public void init() {
 		AngryBirds.CORE.start();
-		birdX = 100;
-		birdY = 400;
-		pigX = Math.random() * 500 + 200; // position aléatoire pour le cochon
-		pigY = 480;
+		bird = new Animal(100,400);
+		pig = new Animal();
+		pig.setPosX(Math.random() * 500 + 200); // position aléatoire pour le cochon
+		pig.setPosY(480);
 	}
 	
 	void work() {
 		if (AngryBirds.CORE.getStatus() == Status.processing) {
 
 			// moteur physique
-			birdX += AngryBirds.CORE.velocityX;
-			birdY += AngryBirds.CORE.velocityY;
+			bird.setPosX(AngryBirds.CORE.velocityX + bird.getPosX());
+			bird.setPosY(AngryBirds.CORE.velocityY + bird.getPosY());
 			AngryBirds.CORE.velocityY += AngryBirds.CORE.gravity;
 
 			// conditions de victoire
-			if (GameCore.distance(birdX, birdY, pigX, pigY) < 35) {
+			if (Animal.distance(bird,pig) < 35) {
 				AngryBirds.CORE.stop();
 				AngryBirds.CORE.message = "Gagné : cliquez pour recommencer.";
 				AngryBirds.CORE.score++;
-			} else if (birdX < 20 || birdX > 780 || birdY < 0 || birdY > 480) {
+			} else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
 				AngryBirds.CORE.stop();
 				AngryBirds.CORE.message = "Perdu : cliquez pour recommencer.";
 			}
@@ -64,37 +65,12 @@ public class GameMode {
 			AngryBirds.GCORE.repaint();
 		}
 	}
-	
-	public double getBirdX() {
-		return birdX;
-	}
 
-	public void setBirdX(double birdX) {
-		this.birdX = birdX;
+	public Animal getBird() {
+		return bird;
 	}
-
-	public double getBirdY() {
-		return birdY;
-	}
-
-	public void setBirdY(double birdY) {
-		this.birdY = birdY;
-	}
-
-	public double getPigX() {
-		return pigX;
-	}
-
-	public void setPigX(double pigX) {
-		this.pigX = pigX;
-	}
-
-	public double getPigY() {
-		return pigY;
-	}
-
-	public void setPigY(double pigY) {
-		this.pigY = pigY;
+	public Animal getPig(){
+		return pig;
 	}
 
 }

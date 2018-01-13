@@ -7,6 +7,7 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import bean.Animal;
 import graphic.GraphicCore;
 import graphic.MotionListener;
 import logic.GameCore;
