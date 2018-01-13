@@ -2,25 +2,23 @@ package logic;
 
 import main.AngryBirds;
 
-public class Core{
+public class GameCore{
 	public enum Status {
-		playable, processing, game_over
+		playable, processing, try_again, game_over
 	}
 	
-	private static Core INSTANCE = new Core();
-	double birdX, birdY, velocityX, velocityY; // informations relatives à l'oiseau
-	double pigX, pigY; // informations relatives au cochon
+	private static GameCore INSTANCE;
+	double velocityX, velocityY; // informations relatives à l'oiseau
 	double gravity; // gravité
 	String message; // message à afficher en haut de l'écran
 	Status status = Status.playable;
 	int score; // nombre de fois où le joueur a gagné
 	
 	// constructeur
-	Core() {
+	private GameCore() {
 		gravity = 0.1;
 		score = 0;
 		init();
-		new Thread(new Runner()).start();
 	}
 
 	/**
@@ -28,9 +26,9 @@ public class Core{
 	 * parce que une classe runnable sa bug a la creation singleton sinon
 	 * @return
 	 */
-	public synchronized static Core getCore() {
+	public synchronized static GameCore getGameCore() {
 		if (INSTANCE == null) {
-			INSTANCE = new Core();
+			INSTANCE = new GameCore();
 		}
 		return INSTANCE;
 	}
@@ -45,36 +43,9 @@ public class Core{
 	// début de partie
 	public void init() {
 		setStatus(Status.playable);
-		birdX = 100;
-		birdY = 400;
 		velocityX = 0;
 		velocityY = 0;
-		pigX = Math.random() * 500 + 200; // position aléatoire pour le cochon
-		pigY = 480;
 		message = "Choisissez l'angle et la vitesse.";
-	}
-
-	void work() {
-		if (status == Status.processing) {
-
-			// moteur physique
-			birdX += velocityX;
-			birdY += velocityY;
-			velocityY += gravity;
-
-			// conditions de victoire
-			if (distance(birdX, birdY, pigX, pigY) < 35) {
-				stop();
-				message = "Gagné : cliquez pour recommencer.";
-				score++;
-			} else if (birdX < 20 || birdX > 780 || birdY < 0 || birdY > 480) {
-				stop();
-				message = "Perdu : cliquez pour recommencer.";
-			}
-
-			// redessine
-			AngryBirds.GCORE.repaint();
-		}
 	}
 	
 	// fin de partie
@@ -85,8 +56,8 @@ public class Core{
 	}
 
 	public void launchBird(int x, int y) {
-		velocityX = (birdX - x) / 20.0;
-		velocityY = (birdY - y) / 20.0;
+		velocityX = (AngryBirds.GMODE.getBirdX() - x) / 20.0;
+		velocityY = (AngryBirds.GMODE.getBirdY() - y) / 20.0;
 		status = Status.processing;
 		message = "L'oiseau prend sont envol";
 	}
@@ -97,22 +68,6 @@ public class Core{
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public double getBirdX() {
-		return birdX;
-	}
-
-	public double getBirdY() {
-		return birdY;
-	}
-
-	public double getPigX() {
-		return pigX;
-	}
-
-	public double getPigY() {
-		return pigY;
 	}
 
 	public int getScore() {

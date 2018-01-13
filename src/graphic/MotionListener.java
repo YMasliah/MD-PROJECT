@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import logic.Core.Status;
+import logic.GameCore.Status;
 import main.AngryBirds;
 
 /**
@@ -33,7 +33,7 @@ public class MotionListener implements MouseListener, MouseMotionListener {
 
 	public void mouseReleased(MouseEvent e) {
 		if (AngryBirds.CORE.getStatus() == Status.game_over) {
-			AngryBirds.CORE.init();
+			AngryBirds.GMODE.init();
 		} else if (AngryBirds.CORE.getStatus() == Status.playable) {
 			AngryBirds.CORE.launchBird(e.getX(), e.getY());
 		}

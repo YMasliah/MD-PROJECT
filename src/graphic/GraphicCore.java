@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
 
-import logic.Core.Status;
+import logic.GameCore.Status;
 import main.AngryBirds;
 
 /**
@@ -25,12 +25,12 @@ public class GraphicCore extends Panel{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static GraphicCore INSTANCE = new GraphicCore();
+	private static GraphicCore INSTANCE;
 	MotionListener motionListener;
 	Image buffer; // image pour le rendu hors écran
 	int posX, posY; // position de la souris lors de la sélection
 
-	GraphicCore() {
+	private GraphicCore() {
 		motionListener = new MotionListener();
 		addMouseListener(motionListener);
 		addMouseMotionListener(motionListener);
@@ -66,12 +66,12 @@ public class GraphicCore extends Panel{
 		// oiseau
 		g.setColor(Color.RED);
 		if (AngryBirds.CORE.getStatus() == Status.playable)
-			g.drawLine((int) AngryBirds.CORE.getBirdX(), (int) AngryBirds.CORE.getBirdY(), posX, posY); // montre l'angle et la vitesse
-		g.fillOval((int) AngryBirds.CORE.getBirdX() - 20, (int) AngryBirds.CORE.getBirdY() - 20, 40, 40);
+			g.drawLine((int) AngryBirds.GMODE.getBirdX(), (int) AngryBirds.GMODE.getBirdY(), posX, posY); // montre l'angle et la vitesse
+		g.fillOval((int) AngryBirds.GMODE.getBirdX() - 20, (int) AngryBirds.GMODE.getBirdY() - 20, 40, 40);
 
 		// cochon
 		g.setColor(Color.GREEN);
-		g.fillOval((int) AngryBirds.CORE.getPigX() - 20, (int) AngryBirds.CORE.getPigY() - 20, 40, 40);
+		g.fillOval((int) AngryBirds.GMODE.getPigX() - 20, (int) AngryBirds.GMODE.getPigY() - 20, 40, 40);
 
 		// messages
 		g.setColor(Color.BLACK);

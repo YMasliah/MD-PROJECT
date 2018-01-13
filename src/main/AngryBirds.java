@@ -8,15 +8,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import graphic.GraphicCore;
-import logic.Core;
+import logic.GameCore;
+import logic.GameMode;
 
 /**
  * @author masliah yann
  *
  */
 public class AngryBirds {
-	public static Core CORE = Core.getCore();
+	public static GameCore CORE = GameCore.getGameCore();
 	public static GraphicCore GCORE = GraphicCore.getGraphicCore();
+	public static GameMode GMODE = GameMode.getGameMode();
+	
 	// met le jeu dans une fenêtre
 	public static void main(String args[]) {
 		Frame frame = new Frame("Oiseau pas content");
