@@ -35,7 +35,7 @@ public class GameMode {
 
 	// début de partie
 	public void init() {
-		AngryBirds.CORE.init();
+		AngryBirds.CORE.start();
 		birdX = 100;
 		birdY = 400;
 		pigX = Math.random() * 500 + 200; // position aléatoire pour le cochon

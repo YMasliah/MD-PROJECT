@@ -11,21 +11,17 @@ public class GameCore{
 	double velocityX, velocityY; // informations relatives à l'oiseau
 	double gravity; // gravité
 	String message; // message à afficher en haut de l'écran
-	Status status = Status.playable;
+	Status status;
 	int score; // nombre de fois où le joueur a gagné
 	
 	// constructeur
 	private GameCore() {
+		status = Status.playable;
 		gravity = 0.1;
 		score = 0;
-		init();
+		start();
 	}
 
-	/**
-	 * faut mettre syncrhonized sinon sa marche pas.
-	 * parce que une classe runnable sa bug a la creation singleton sinon
-	 * @return
-	 */
 	public synchronized static GameCore getGameCore() {
 		if (INSTANCE == null) {
 			INSTANCE = new GameCore();
@@ -41,7 +37,7 @@ public class GameCore{
 	}
 
 	// début de partie
-	public void init() {
+	public void start() {
 		setStatus(Status.playable);
 		velocityX = 0;
 		velocityY = 0;

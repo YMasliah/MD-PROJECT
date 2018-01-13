@@ -16,8 +16,6 @@ import main.AngryBirds;
 /**
  * @author masliah yann
  *
- *         J'arrive pas a sortir les Listeners si je les sort. ben il veut pas
- *         repaint quand c'est le listener qui demande.
  */
 public class GraphicCore extends Panel{
 	/**
