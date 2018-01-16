@@ -16,15 +16,16 @@ public class GameMode {
 	Animal bird;
 	Animal pig;
 	private static GameMode INSTANCE;
-	
-	GameMode(){
+
+	GameMode() {
 		init();
 		new Thread(new Runner()).start();
 	}
-	
+
 	/**
-	 * faut mettre syncrhonized sinon sa marche pas.
-	 * parce que une classe runnable sa bug a la creation singleton sinon
+	 * faut mettre syncrhonized sinon sa marche pas. parce que une classe
+	 * runnable sa bug a la creation singleton sinon
+	 * 
 	 * @return
 	 */
 	public synchronized static GameMode getGameMode() {
@@ -34,42 +35,44 @@ public class GameMode {
 		return INSTANCE;
 	}
 
-	// début de partie
+	// dï¿½but de partie
 	public void init() {
-		AngryBirds.CORE.start();
-		bird = new Animal(100,400);
+		AngryBirds.GAMECORE.start();
+		bird = new Animal(100, 400);
 		pig = new Animal();
-		pig.setPosX(Math.random() * 500 + 200); // position aléatoire pour le cochon
-		pig.setPosY(480);
+		pig.setPosX(Math.random() * 500 + 200); // position alï¿½atoire pour le
+		// cochon
+pig.setPosY(480);
 	}
-	
+
 	void work() {
-		if (AngryBirds.CORE.getStatus() == Status.processing) {
+		if (AngryBirds.GAMECORE.getStatus() == Status.processing) {
 
 			// moteur physique
-			bird.setPosX(AngryBirds.CORE.velocityX + bird.getPosX());
-			bird.setPosY(AngryBirds.CORE.velocityY + bird.getPosY());
-			AngryBirds.CORE.velocityY += AngryBirds.CORE.gravity;
+			bird.setPosX(AngryBirds.GAMECORE.getVelocityX() + bird.getPosX());
+			bird.setPosY(AngryBirds.GAMECORE.getVelocityY() + bird.getPosY());
+			AngryBirds.GAMECORE.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity());
 
 			// conditions de victoire
-			if (Animal.distance(bird,pig) < 35) {
-				AngryBirds.CORE.stop();
-				AngryBirds.CORE.message = "Gagné : cliquez pour recommencer.";
-				AngryBirds.CORE.score++;
+			if (Animal.distance(bird, pig) < 35) {
+				AngryBirds.GAMECORE.stop();
+				AngryBirds.GAMECORE.setMessage("Gagnï¿½ : cliquez pour recommencer.");
+				AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
 			} else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
-				AngryBirds.CORE.stop();
-				AngryBirds.CORE.message = "Perdu : cliquez pour recommencer.";
+				AngryBirds.GAMECORE.stop();
+				AngryBirds.GAMECORE.setMessage("Perdu : cliquez pour recommencer.");
 			}
 
 			// redessine
-			AngryBirds.GCORE.repaint();
+			AngryBirds.GRAPHICCORE.repaint();
 		}
 	}
 
 	public Animal getBird() {
 		return bird;
 	}
-	public Animal getPig(){
+
+	public Animal getPig() {
 		return pig;
 	}
 

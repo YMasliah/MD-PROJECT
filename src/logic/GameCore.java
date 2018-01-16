@@ -1,25 +1,36 @@
 package logic;
 
 import main.AngryBirds;
-
-public class GameCore{
+/**
+ * 
+ * 
+ * @author Arthur
+ *
+ * abstract class
+ * 
+ * Faire un builder de cette classe , qui s'occupe de tout les paramÃ¨tres envoyÃ©s au thread , gravitÃ© , nombre d'animaux
+ * regrouper init et start car il sont appelÃ© au meme moment pour faire la meme chose KAppa
+ * 
+ * 
+ * 
+ */
+public class GameCore {
 	public enum Status {
 		playable, processing, try_again, game_over
 	}
-	
+
 	private static GameCore INSTANCE;
-	
-	double velocityX, velocityY; // informations relatives à l'oiseau
-	double gravity; // gravité
-	String message; // message à afficher en haut de l'écran
-	Status status;
-	int score; // nombre de fois où le joueur a gagné
-	
+
+	private double velocityX, velocityY; // informations relatives ï¿½ l'oiseau
+	private double gravity; // gravitï¿½
+	private String message; // message ï¿½ afficher en haut de l'ï¿½cran
+	private Status status;
+	private int score; // nombre de fois oï¿½ le joueur a gagnï¿½
+
 	// constructeur
 	private GameCore() {
-		status = Status.playable;
-		gravity = 0.1;
-		score = 0;
+		this.gravity = 0.1;
+		this.score = 0;
 		start();
 	}
 
@@ -29,16 +40,15 @@ public class GameCore{
 		}
 		return INSTANCE;
 	}
-	
 
-	// début de partie
+	// dï¿½but de partie
 	public void start() {
 		setStatus(Status.playable);
 		velocityX = 0;
 		velocityY = 0;
 		message = "Choisissez l'angle et la vitesse.";
 	}
-	
+
 	// fin de partie
 	void stop() {
 		velocityX = 0;
@@ -47,8 +57,8 @@ public class GameCore{
 	}
 
 	public void launchBird(int x, int y) {
-		velocityX = (AngryBirds.GAMEMODE.getBird().getPosX() - x) / 20.0;
-		velocityY = (AngryBirds.GAMEMODE.getBird().getPosY() - y) / 20.0;
+		velocityX = (AngryBirds.GAMEMODE.getBird().getPosX() - x) / 10.0;
+		velocityY = (AngryBirds.GAMEMODE.getBird().getPosY() - y) / 10.0;
 		status = Status.processing;
 		message = "L'oiseau prend sont envol";
 	}
@@ -64,8 +74,40 @@ public class GameCore{
 	public int getScore() {
 		return score;
 	}
-	
+
 	public String getMessage() {
 		return message;
+	}
+
+	public double getVelocityX() {
+		return velocityX;
+	}
+
+	public double getVelocityY() {
+		return velocityY;
+	}
+
+	public double getGravity() {
+		return gravity;
+	}
+
+	public void setVelocityX(double velocityX) {
+		this.velocityX = velocityX;
+	}
+
+	public void setVelocityY(double velocityY) {
+		this.velocityY = velocityY;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public void withGravity(int number){
+		this.gravity = number;
 	}
 }

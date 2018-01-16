@@ -3,28 +3,27 @@
  */
 package graphic;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
 
-import logic.GameCore.Status;
+import graphic.components.ComponentsFactory;
 import main.AngryBirds;
 
 /**
  * @author masliah yann
  *
  */
-public class GraphicCore extends Panel{
+public class GraphicCore extends Panel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private static GraphicCore INSTANCE;
-	
+
 	Image buffer; // image pour le rendu hors écran
 	int posX, posY; // position de la souris lors de la sélection
 
@@ -42,41 +41,34 @@ public class GraphicCore extends Panel{
 		addMouseListener(AngryBirds.LISTENER);
 		addMouseMotionListener(AngryBirds.LISTENER);
 	}
-	
+
 	// évite les scintillements
 	public void update(Graphics g) {
 		paint(g);
 	}
 
-	// dessine le contenu de l'écran dans un buffer puis copie le buffer à l'écran
+	// dessine le contenu de l'écran dans un buffer puis copie le buffer à
+	// l'écran
 	public void paint(Graphics g2) {
 		if (buffer == null)
 			buffer = createImage(800, 600);
 		Graphics2D g = (Graphics2D) buffer.getGraphics();
 
+		//ComponentsFactory components_factory = new ComponentsFactory();
 		// fond
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		ComponentsFactory.getComponents("BACKGROUND").draw(g);
 
 		// décor
-		g.setColor(Color.BLACK);
-		g.drawLine(0, 500, 800, 500);
-		g.drawLine(100, 500, 100, 400);
+		ComponentsFactory.getComponents("DECOR").draw(g);
 
 		// oiseau
-		g.setColor(Color.RED);
-		if (AngryBirds.CORE.getStatus() == Status.playable)
-			g.drawLine((int) AngryBirds.GAMEMODE.getBird().getPosX(), (int) AngryBirds.GAMEMODE.getBird().getPosY(), posX, posY); // montre l'angle et la vitesse
-		g.fillOval((int) AngryBirds.GAMEMODE.getBird().getPosX() - 20, (int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40);
+		ComponentsFactory.getComponents("BIRD").draw(g);
 
 		// cochon
-		g.setColor(Color.GREEN);
-		g.fillOval((int) AngryBirds.GAMEMODE.getPig().getPosX() - 20, (int) AngryBirds.GAMEMODE.getPig().getPosY() - 20, 40, 40);
+		ComponentsFactory.getComponents("PIG").draw(g);
 
 		// messages
-		g.setColor(Color.BLACK);
-		g.drawString(AngryBirds.CORE.getMessage(), 300, 100);
-		g.drawString("score: " + AngryBirds.CORE.getScore(), 20, 20);
+		ComponentsFactory.getComponents("MESSAGES").draw(g);
 
 		// affichage à l'écran sans scintillement
 		g2.drawImage(buffer, 0, 0, null);
@@ -86,7 +78,7 @@ public class GraphicCore extends Panel{
 	public Dimension getPreferredSize() {
 		return new Dimension(800, 600);
 	}
-	
+
 	public int getPosX() {
 		return posX;
 	}

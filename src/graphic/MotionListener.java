@@ -28,7 +28,7 @@ public class MotionListener implements Listener, MouseListener, MouseMotionListe
 		return INSTANCE;
 	}
 	
-	// gestion des événements souris
+	// gestion des ï¿½vï¿½nements souris
 	public void mouseClicked(MouseEvent e) {
 	}
 
@@ -58,12 +58,12 @@ public class MotionListener implements Listener, MouseListener, MouseMotionListe
 	 */
 	@Override
 	public void action(ComponentEvent e) {
-		if (AngryBirds.CORE.getStatus() == Status.game_over) {
+		if (AngryBirds.GAMECORE.getStatus() == Status.game_over) {
 			AngryBirds.GAMEMODE.init();
-		} else if (AngryBirds.CORE.getStatus() == Status.playable) {
-			AngryBirds.CORE.launchBird(((MouseEvent) e).getX(), ((MouseEvent) e).getY());
+		} else if (AngryBirds.GAMECORE.getStatus() == Status.playable) {
+			AngryBirds.GAMECORE.launchBird(((MouseEvent) e).getX(), ((MouseEvent) e).getY());
 		}
-		AngryBirds.GCORE.repaint();
+		AngryBirds.GRAPHICCORE.repaint();
 	}
 
 	/* (non-Javadoc)
@@ -71,9 +71,9 @@ public class MotionListener implements Listener, MouseListener, MouseMotionListe
 	 */
 	@Override
 	public void mouvement(ComponentEvent e) {
-		AngryBirds.GCORE.setPosX(((MouseEvent) e).getX());
-		AngryBirds.GCORE.setPosY(((MouseEvent) e).getY());
-		AngryBirds.GCORE.repaint();
+		AngryBirds.GRAPHICCORE.setPosX(((MouseEvent) e).getX());
+		AngryBirds.GRAPHICCORE.setPosY(((MouseEvent) e).getY());
+		AngryBirds.GRAPHICCORE.repaint();
 		
 	}
 }
