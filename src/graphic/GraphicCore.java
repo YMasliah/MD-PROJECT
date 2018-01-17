@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
+import java.util.ArrayList;
 
 import graphic.components.ComponentsFactory;
 import main.AngryBirds;
@@ -26,6 +27,7 @@ public class GraphicCore extends Panel {
 
 	Image buffer; // image pour le rendu hors écran
 	int posX, posY; // position de la souris lors de la sélection
+	private ArrayList<String> elements;
 
 	private GraphicCore() {
 	}
@@ -94,4 +96,5 @@ public class GraphicCore extends Panel {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
+	
 }

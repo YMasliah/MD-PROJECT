@@ -13,6 +13,6 @@ public class Background implements IComponents{
 		Dimension d = AngryBirds.GRAPHICCORE.getPreferredSize();
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, (int) d.getWidth(), (int) d.getHeight());
-
+		
 	}
 }

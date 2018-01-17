@@ -51,7 +51,7 @@ pig.setPosY(480);
 			// moteur physique
 			bird.setPosX(AngryBirds.GAMECORE.getVelocityX() + bird.getPosX());
 			bird.setPosY(AngryBirds.GAMECORE.getVelocityY() + bird.getPosY());
-			AngryBirds.GAMECORE.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity());
+			AngryBirds.GAMECORE.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 
 			// conditions de victoire
 			if (Animal.distance(bird, pig) < 35) {

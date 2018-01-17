@@ -1,5 +1,6 @@
 package logic;
 
+import bean.Gravity;
 import main.AngryBirds;
 /**
  * 
@@ -22,14 +23,16 @@ public class GameCore {
 	private static GameCore INSTANCE;
 
 	private double velocityX, velocityY; // informations relatives � l'oiseau
-	private double gravity; // gravit�
+	private Gravity gravity;
 	private String message; // message � afficher en haut de l'�cran
 	private Status status;
 	private int score; // nombre de fois o� le joueur a gagn�
 
 	// constructeur
 	private GameCore() {
-		this.gravity = 0.1;
+		
+		gravity = new Gravity();
+		gravity.setGravity(0.1);
 		this.score = 0;
 		start();
 	}
@@ -57,8 +60,8 @@ public class GameCore {
 	}
 
 	public void launchBird(int x, int y) {
-		velocityX = (AngryBirds.GAMEMODE.getBird().getPosX() - x) / 10.0;
-		velocityY = (AngryBirds.GAMEMODE.getBird().getPosY() - y) / 10.0;
+		velocityX = (AngryBirds.GAMEMODE.getBird().getPosX() - x) / 20.0;
+		velocityY = (AngryBirds.GAMEMODE.getBird().getPosY() - y) / 20.0;
 		status = Status.processing;
 		message = "L'oiseau prend sont envol";
 	}
@@ -86,8 +89,7 @@ public class GameCore {
 	public double getVelocityY() {
 		return velocityY;
 	}
-
-	public double getGravity() {
+	public Gravity getGravity() {
 		return gravity;
 	}
 
@@ -107,7 +109,4 @@ public class GameCore {
 		this.score = score;
 	}
 
-	public void withGravity(int number){
-		this.gravity = number;
-	}
 }

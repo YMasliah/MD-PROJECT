@@ -13,13 +13,13 @@ import logic.GameMode;
  *
  */
 public abstract class Launcher {
-	public static GameCore CORE;
-	public static GraphicCore GCORE;
+	public static GameCore GAMECORE;
+	public static GraphicCore GRAPHICCORE;
 	public static GameMode GAMEMODE;
 	public static MotionListener LISTENER;
 	
 	public Launcher() throws Exception {
-		if(CORE == null || GCORE == null || GAMEMODE == null || LISTENER == null)
+		if(GAMECORE == null || GRAPHICCORE == null || GAMEMODE == null || LISTENER == null)
 			throw new Exception("Un composant est manquant");
 	}
 }
