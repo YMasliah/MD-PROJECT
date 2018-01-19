@@ -3,6 +3,8 @@
  */
 package logic;
 
+import java.util.ArrayList;
+
 import bean.Animal;
 import bean.Bird;
 import bean.Pig;
@@ -16,13 +18,22 @@ import main.AngryBirds;
 public class GameMode {
 
 	Bird bird;
-	Pig pig;
+	ArrayList<Pig> pigs = new ArrayList<>();
+	
+	final int pigCountInit;
+	final int birdCountInit;
+	
+	int pigCount = 0;
+	int birdCount = 0;
+	
 	private static GameMode INSTANCE;
 
 	/**
 	 * ca serra dans un builder je crois plus tard
 	 */
 	GameMode() {
+		pigCountInit = 2;
+		birdCountInit = 1;
 		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
 		AngryBirds.GRAPHICCORE.addElement("DECOR");
 		AngryBirds.GRAPHICCORE.addElement("BIRD");
@@ -48,11 +59,21 @@ public class GameMode {
 	// d�but de partie
 	public void init() {
 		AngryBirds.GAMECORE.start();
+		if(birdCount < 1) {
+			AngryBirds.GAMECORE.setStatus(Status.game_over);
+			birdCount = birdCountInit;
+		}
 		bird = new Bird(100, 400);
-		pig = new Pig();
-		pig.setPosX(Math.random() * 500 + 200); // position al�atoire pour le
-		// cochon
-		pig.setPosY(480);
+		
+		if(AngryBirds.GAMECORE.getStatus() == Status.game_over) {
+			pigCount = pigCountInit;
+			pigs = new ArrayList<>();
+			for(int i = 0; i<pigCount;i++) {
+				pigs.add(new Pig(Math.random() * 500 + 200,480));
+			}
+			AngryBirds.GAMECORE.setStatus(Status.playable);
+		}
+		
 	}
 
 	void work() {
@@ -65,26 +86,27 @@ public class GameMode {
 					.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 
 			// conditions de victoire
-			if (Animal.distance(bird, pig) < 35) {
-				AngryBirds.GAMECORE.stop();
-				AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");
-				AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
-			} else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
-				AngryBirds.GAMECORE.stop();
-				AngryBirds.GAMECORE.setMessage("Perdu : cliquez pour recommencer.");
+			for(Pig pig : pigs) {
+				if (Animal.distance(bird, pig) < 35) {
+					AngryBirds.GAMECORE.stop();
+					AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");
+					AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
+				} else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
+					AngryBirds.GAMECORE.stop();
+					AngryBirds.GAMECORE.setMessage("Perdu : cliquez pour recommencer.");
+				}
 			}
-
 			// redessine
 			AngryBirds.GRAPHICCORE.repaint();
 		}
 	}
 
-	public Animal getBird() {
+	public Bird getBird() {
 		return bird;
 	}
 
-	public Animal getPig() {
-		return pig;
+	public ArrayList<Pig> getPigs() {
+		return pigs;
 	}
 
 }

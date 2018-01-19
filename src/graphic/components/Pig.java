@@ -1,8 +1,6 @@
 package graphic.components;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +19,9 @@ public class Pig implements IComponents {
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			g.drawImage(img, (int) AngryBirds.GAMEMODE.getPig().getPosX() - 20, (int) AngryBirds.GAMEMODE.getPig().getPosY() - 20, 40, 40, null);
+			for(bean.Pig pig : AngryBirds.GAMEMODE.getPigs()) {
+				g.drawImage(img, (int) pig.getPosX() - 20, (int) pig.getPosY() - 20, 40, 40, null);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
