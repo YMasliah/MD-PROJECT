@@ -4,6 +4,8 @@
 package logic;
 
 import bean.Animal;
+import bean.Bird;
+import bean.Pig;
 import logic.GameCore.Status;
 import main.AngryBirds;
 
@@ -13,18 +15,26 @@ import main.AngryBirds;
  */
 public class GameMode {
 
-	Animal bird;
-	Animal pig;
+	Bird bird;
+	Pig pig;
 	private static GameMode INSTANCE;
 
+	/**
+	 * ca serra dans un builder je crois plus tard
+	 */
 	GameMode() {
+		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
+		AngryBirds.GRAPHICCORE.addElement("DECOR");
+		AngryBirds.GRAPHICCORE.addElement("BIRD");
+		AngryBirds.GRAPHICCORE.addElement("PIG");
+		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
 		init();
 		new Thread(new Runner()).start();
 	}
 
 	/**
-	 * faut mettre syncrhonized sinon sa marche pas. parce que une classe
-	 * runnable sa bug a la creation singleton sinon
+	 * faut mettre syncrhonized sinon sa marche pas. parce que une classe runnable
+	 * sa bug a la creation singleton sinon
 	 * 
 	 * @return
 	 */
@@ -34,15 +44,15 @@ public class GameMode {
 		}
 		return INSTANCE;
 	}
-
+	
 	// d�but de partie
 	public void init() {
 		AngryBirds.GAMECORE.start();
-		bird = new Animal(100, 400);
-		pig = new Animal();
+		bird = new Bird(100, 400);
+		pig = new Pig();
 		pig.setPosX(Math.random() * 500 + 200); // position al�atoire pour le
 		// cochon
-pig.setPosY(480);
+		pig.setPosY(480);
 	}
 
 	void work() {
@@ -51,7 +61,8 @@ pig.setPosY(480);
 			// moteur physique
 			bird.setPosX(AngryBirds.GAMECORE.getVelocityX() + bird.getPosX());
 			bird.setPosY(AngryBirds.GAMECORE.getVelocityY() + bird.getPosY());
-			AngryBirds.GAMECORE.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
+			AngryBirds.GAMECORE
+					.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 
 			// conditions de victoire
 			if (Animal.distance(bird, pig) < 35) {

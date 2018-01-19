@@ -1,6 +1,8 @@
 package bean;
 
-public class Animal {
+import graphic.components.IComponents;
+
+public abstract class Animal implements IComponents{
 
 	private double posX;
 	private double posY;

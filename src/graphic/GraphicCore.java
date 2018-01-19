@@ -30,6 +30,7 @@ public class GraphicCore extends Panel {
 	private ArrayList<String> elements;
 
 	private GraphicCore() {
+		elements = new ArrayList<>();
 	}
 
 	public synchronized static GraphicCore getGraphicCore() {
@@ -55,22 +56,10 @@ public class GraphicCore extends Panel {
 		if (buffer == null)
 			buffer = createImage(800, 600);
 		Graphics2D g = (Graphics2D) buffer.getGraphics();
-
-		//ComponentsFactory components_factory = new ComponentsFactory();
-		// fond
-		ComponentsFactory.getComponents("BACKGROUND").draw(g);
-
-		// décor
-		ComponentsFactory.getComponents("DECOR").draw(g);
-
-		// oiseau
-		ComponentsFactory.getComponents("BIRD").draw(g);
-
-		// cochon
-		ComponentsFactory.getComponents("PIG").draw(g);
-
-		// messages
-		ComponentsFactory.getComponents("MESSAGES").draw(g);
+		
+		for(String element : elements) {
+			ComponentsFactory.getComponents(element).draw(g);
+		}
 
 		// affichage à l'écran sans scintillement
 		g2.drawImage(buffer, 0, 0, null);
@@ -97,4 +86,11 @@ public class GraphicCore extends Panel {
 		this.posY = posY;
 	}
 	
+	public ArrayList<String> getElements() {
+		return elements;
+	}
+
+	public void addElement(String element) {
+		elements.add(element);
+	}
 }

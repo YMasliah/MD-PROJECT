@@ -30,7 +30,6 @@ public class GameCore {
 
 	// constructeur
 	private GameCore() {
-		
 		gravity = new Gravity();
 		gravity.setGravity(0.1);
 		this.score = 0;
