@@ -17,14 +17,13 @@ import main.AngryBirds;
  */
 public class GameMode {
 
-	Bird bird;
-	ArrayList<Pig> pigs = new ArrayList<>();
+	private Bird bird;
+	private ArrayList<Pig> pigs = new ArrayList<>();
 	
-	final int pigCountInit;
-	final int birdCountInit;
+	private final int pigCountInit;
+	private final int birdCountInit;
 	
-	int pigCount = 0;
-	int birdCount = 0;
+	private int birdCount = 0;
 	
 	private static GameMode INSTANCE;
 
@@ -33,7 +32,7 @@ public class GameMode {
 	 */
 	GameMode() {
 		pigCountInit = 2;
-		birdCountInit = 1;
+		birdCountInit = 4;
 		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
 		AngryBirds.GRAPHICCORE.addElement("DECOR");
 		AngryBirds.GRAPHICCORE.addElement("BIRD");
@@ -58,22 +57,26 @@ public class GameMode {
 	
 	// d�but de partie
 	public void init() {
-		AngryBirds.GAMECORE.start();
-		if(birdCount < 1) {
+		if(birdCount < 1 || pigs.size() == 0) {
+			if(birdCount==0){
+				AngryBirds.GAMECORE.setScore(0);
+			}
 			AngryBirds.GAMECORE.setStatus(Status.game_over);
 			birdCount = birdCountInit;
+		}else{
+			AngryBirds.GAMECORE.setStatus(Status.try_again);
 		}
+		
+		
 		bird = new Bird(100, 400);
 		
 		if(AngryBirds.GAMECORE.getStatus() == Status.game_over) {
-			pigCount = pigCountInit;
 			pigs = new ArrayList<>();
-			for(int i = 0; i<pigCount;i++) {
-				pigs.add(new Pig(Math.random() * 500 + 200,480));
+			for(int i = 0; i<pigCountInit;i++) {
+				pigs.add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
 			}
-			AngryBirds.GAMECORE.setStatus(Status.playable);
 		}
-		
+		AngryBirds.GAMECORE.start();
 	}
 
 	void work() {
@@ -86,8 +89,9 @@ public class GameMode {
 					.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 
 			// conditions de victoire
-			for(Pig pig : pigs) {
-				if (Animal.distance(bird, pig) < 35) {
+			for(int i = pigs.size()-1; i>= 0 ; i--) {
+				if (Animal.distance(bird, pigs.get(i)) < 35) {
+					pigs.remove(i);
 					AngryBirds.GAMECORE.stop();
 					AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");
 					AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
@@ -109,4 +113,29 @@ public class GameMode {
 		return pigs;
 	}
 
+	public int getBirdCount() {
+		return birdCount;
+	}
+
+	public void setBirdCount(int birdCount) {
+		this.birdCount = birdCount;
+	}
+
+	public int getPigCountInit() {
+		return pigCountInit;
+	}
+
+	public int getBirdCountInit() {
+		return birdCountInit;
+	}
+
+	public void setBird(Bird bird) {
+		this.bird = bird;
+	}
+
+	public void setPigs(ArrayList<Pig> pigs) {
+		this.pigs = pigs;
+	}
+
+	
 }

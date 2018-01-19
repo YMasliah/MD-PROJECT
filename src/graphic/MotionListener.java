@@ -58,9 +58,10 @@ public class MotionListener implements Listener, MouseListener, MouseMotionListe
 	 */
 	@Override
 	public void action(ComponentEvent e) {
-		if (AngryBirds.GAMECORE.getStatus() == Status.game_over) {
+		if (AngryBirds.GAMECORE.getStatus() == Status.game_over || AngryBirds.GAMECORE.getStatus() == Status.try_again) {
 			AngryBirds.GAMEMODE.init();
 		} else if (AngryBirds.GAMECORE.getStatus() == Status.playable) {
+			AngryBirds.GAMEMODE.setBirdCount(AngryBirds.GAMEMODE.getBirdCount()-1);
 			AngryBirds.GAMECORE.launchBird(((MouseEvent) e).getX(), ((MouseEvent) e).getY());
 		}
 		AngryBirds.GRAPHICCORE.repaint();

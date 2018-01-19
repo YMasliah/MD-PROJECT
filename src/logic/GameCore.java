@@ -55,7 +55,7 @@ public class GameCore {
 	void stop() {
 		velocityX = 0;
 		velocityY = 0;
-		setStatus(Status.game_over);
+		setStatus(Status.try_again);
 	}
 
 	public void launchBird(int x, int y) {
