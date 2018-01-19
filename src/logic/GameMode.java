@@ -90,7 +90,7 @@ public class GameMode {
 
 			// conditions de victoire
 			for(int i = pigs.size()-1; i>= 0 ; i--) {
-				if (Animal.distance(bird, pigs.get(i)) < 35) {
+				if (Animal.distance((Animal)bird, (Animal)pigs.get(i)) < 35) {
 					pigs.remove(i);
 					AngryBirds.GAMECORE.stop();
 					AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");
