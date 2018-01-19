@@ -18,33 +18,28 @@ public class Bird implements IComponents {
 			g.drawLine((int) AngryBirds.GAMEMODE.getBird().getPosX(), (int) AngryBirds.GAMEMODE.getBird().getPosY(),
 					AngryBirds.GRAPHICCORE.getPosX(), AngryBirds.GRAPHICCORE.getPosY());
 		}
-		// g.fillOval((int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
-		// (int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40);
-
 		File fast = new File("resources/images/bird.jpg");
 		File slow = new File("resources/images/raw-bird.jpg");
 		BufferedImage img;
 		Double speed = new Double(0);
 		try {
-//			speed = Math.abs(AngryBirds.GAMECORE.getVelocityY()) / Math.abs(AngryBirds.GAMECORE.getVelocityX());
-			if (!speed.isNaN() && Math.abs(AngryBirds.GAMECORE.getVelocityX())
-					/ Math.abs(AngryBirds.GAMECORE.getVelocityY()) < 1.1) {
 
+			speed = Math.pow(Math.abs(AngryBirds.GAMECORE.getVelocityY()), 2)
+					+ Math.pow(Math.abs(AngryBirds.GAMECORE.getVelocityX()), 2);
+
+			if (Math.sqrt(speed) > 6) {
+				System.out.println(Math.sqrt(speed));
 				img = ImageIO.read(fast);
-				g.drawImage(img,
-						(int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
-						(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20,
-						40, 40, null);
+				g.drawImage(img, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
+						(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40, null);
 			} else {
-				// AngryBirds.GAMEMODE.getBird()
-				// -AngryBirds.GAMECORE.getVelocityX() * 0.1);
-				// bird.getPosY()-AngryBirds.GAMECORE.getVelocityY() *0.1);
+
 				if (AngryBirds.GAMECORE.getStatus() != Status.game_over) {
 					img = ImageIO.read(slow);
 					g.drawImage(img, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
 							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40, null);
-				}
-				else {
+
+				} else {
 					img = ImageIO.read(fast);
 					g.drawImage(img, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
 							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40, null);
