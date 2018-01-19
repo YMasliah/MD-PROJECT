@@ -23,6 +23,8 @@ public class GameMode {
 	final int pigCountInit;
 	final int birdCountInit;
 	
+	Collision gestionnaire_collision = new Collision();
+	
 	int pigCount = 0;
 	int birdCount = 0;
 	
@@ -64,12 +66,14 @@ public class GameMode {
 			birdCount = birdCountInit;
 		}
 		bird = new Bird(100, 400);
+		gestionnaire_collision.liste_animaux.add(bird);
 		
 		if(AngryBirds.GAMECORE.getStatus() == Status.game_over) {
 			pigCount = pigCountInit;
 			pigs = new ArrayList<>();
 			for(int i = 0; i<pigCount;i++) {
 				pigs.add(new Pig(Math.random() * 500 + 200,480));
+				gestionnaire_collision.add_animal(pigs);
 			}
 			AngryBirds.GAMECORE.setStatus(Status.playable);
 		}
@@ -86,15 +90,15 @@ public class GameMode {
 					.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 
 			// conditions de victoire
-			for(Pig pig : pigs) {
-				if (Animal.distance(bird, pig) < 35) {
-					AngryBirds.GAMECORE.stop();
-					AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");
-					AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
-				} else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
-					AngryBirds.GAMECORE.stop();
-					AngryBirds.GAMECORE.setMessage("Perdu : cliquez pour recommencer.");
-				}
+			if (gestionnaire_collision.CheckCollision() == 1) {
+				AngryBirds.GAMECORE.stop();
+				AngryBirds.GAMECORE.setMessage("Gagné : cliquez pour recommencer.");
+				AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
+			}
+			
+			else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
+				AngryBirds.GAMECORE.stop();
+				AngryBirds.GAMECORE.setMessage("Perdu : cliquez pour recommencer.");
 			}
 			// redessine
 			AngryBirds.GRAPHICCORE.repaint();

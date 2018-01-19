@@ -26,7 +26,7 @@ public class Bird implements IComponents {
 		BufferedImage img;
 		Double speed = new Double(0);
 		try {
-			speed = Math.abs(AngryBirds.GAMECORE.getVelocityY()) / Math.abs(AngryBirds.GAMECORE.getVelocityX());
+//			speed = Math.abs(AngryBirds.GAMECORE.getVelocityY()) / Math.abs(AngryBirds.GAMECORE.getVelocityX());
 			if (!speed.isNaN() && Math.abs(AngryBirds.GAMECORE.getVelocityX())
 					/ Math.abs(AngryBirds.GAMECORE.getVelocityY()) < 1.1) {
 

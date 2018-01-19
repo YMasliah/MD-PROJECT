@@ -1,6 +1,7 @@
 package bean;
 
 import graphic.components.IComponents;
+import logic.Collision;
 
 public abstract class Animal implements IComponents{
 
@@ -15,12 +16,7 @@ public abstract class Animal implements IComponents{
 		// TODO Auto-generated constructor stub
 	}
 	
-	// calcule la distance entre deux animaux
-	public static double distance(Animal a1, Animal a2) {
-		double dx = a1.getPosX() - a2.getPosX();
-		double dy = a1.getPosY() - a2.getPosY();
-		return Math.sqrt(dx * dx + dy * dy);
-	}
+
 	public double getPosY() {
 		return posY;
 	}
@@ -33,5 +29,7 @@ public abstract class Animal implements IComponents{
 	public void setPosX(double posX) {
 		this.posX = posX;
 	}
+	
+	public void collisionWith(Animal a, Collision c){}
 
 }

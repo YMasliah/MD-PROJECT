@@ -1,16 +1,23 @@
 package logic;
 
+import java.util.ArrayList;
+
 import bean.Gravity;
+import bean.Pig;
+import logic.GameCore.Status;
 import main.AngryBirds;
+
 /**
  * 
  * 
  * @author Arthur
  *
- * abstract class
+ *         abstract class
  * 
- * Faire un builder de cette classe , qui s'occupe de tout les paramètres envoyés au thread , gravité , nombre d'animaux
- * regrouper init et start car il sont appelé au meme moment pour faire la meme chose KAppa
+ *         Faire un builder de cette classe , qui s'occupe de tout les
+ *         paramètres envoyés au thread , gravité , nombre d'animaux regrouper
+ *         init et start car il sont appelé au meme moment pour faire la meme
+ *         chose KAppa
  * 
  * 
  * 
@@ -56,6 +63,7 @@ public class GameCore {
 		velocityX = 0;
 		velocityY = 0;
 		setStatus(Status.game_over);
+
 	}
 
 	public void launchBird(int x, int y) {
@@ -88,6 +96,7 @@ public class GameCore {
 	public double getVelocityY() {
 		return velocityY;
 	}
+
 	public Gravity getGravity() {
 		return gravity;
 	}
