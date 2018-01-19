@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import bean.Animal;
 import bean.Bird;
 import bean.Pig;
-import main.AngryBirds;
 
 public class Collision {
 
-	ArrayList<Animal> liste_animaux;
+	private ArrayList<Animal> liste_animaux;
 
 	public Collision() {
 		liste_animaux = new ArrayList<Animal>();
@@ -33,13 +32,11 @@ public class Collision {
 				if ((i != j) && (Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 35)) {
 					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
 					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
-
 					if (liste_animaux.get(i) instanceof Bird && liste_animaux.get(j) instanceof Pig)
 						return 1;
 				}
 			}
 		}
-
 		return 0;
 	}
 }

@@ -24,8 +24,8 @@ public class Bird implements IComponents {
 		Double speed = new Double(0);
 		try {
 
-			speed = Math.pow(Math.abs(AngryBirds.GAMECORE.getVelocityY()), 2)
-					+ Math.pow(Math.abs(AngryBirds.GAMECORE.getVelocityX()), 2);
+			speed = Math.pow(Math.abs(AngryBirds.GAMEMODE.getBird().getVelocityY()), 2)
+					+ Math.pow(Math.abs(AngryBirds.GAMEMODE.getBird().getVelocityX()), 2);
 
 			if (Math.sqrt(speed) > 6) {
 				System.out.println(Math.sqrt(speed));

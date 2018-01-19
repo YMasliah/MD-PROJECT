@@ -5,8 +5,8 @@ package logic;
 
 import java.util.ArrayList;
 
-import bean.Animal;
 import bean.Bird;
+import bean.Gravity;
 import bean.Pig;
 import logic.GameCore.Status;
 import main.AngryBirds;
@@ -17,7 +17,7 @@ import main.AngryBirds;
  */
 public class GameMode {
 
-	private Bird bird;
+	private Bird bird = new Bird();
 	private ArrayList<Pig> pigs = new ArrayList<>();
 	
 	private final int pigCountInit;
@@ -26,6 +26,7 @@ public class GameMode {
 	private int birdCount = 0;
 	
 	private static GameMode INSTANCE;
+	private ArrayList<Gravity> gravity_list;
 
 	/**
 	 * ca serra dans un builder je crois plus tard
@@ -38,6 +39,11 @@ public class GameMode {
 		AngryBirds.GRAPHICCORE.addElement("BIRD");
 		AngryBirds.GRAPHICCORE.addElement("PIG");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
+		
+		gravity_list = new ArrayList<Gravity>();
+		gravity_list.add(new Gravity(0.1)); //
+		gravity_list.add(new bean.Vent(0.9));
+		
 		init();
 		new Thread(new Runner()).start();
 	}
@@ -83,14 +89,21 @@ public class GameMode {
 		if (AngryBirds.GAMECORE.getStatus() == Status.processing) {
 
 			// moteur physique
-			bird.setPosX(AngryBirds.GAMECORE.getVelocityX() + bird.getPosX());
-			bird.setPosY(AngryBirds.GAMECORE.getVelocityY() + bird.getPosY());
-			AngryBirds.GAMECORE
-					.setVelocityY(AngryBirds.GAMECORE.getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
+			bird.setPosX(AngryBirds.GAMEMODE.getBird().getVelocityX() + bird.getPosX());
+			bird.setPosY(AngryBirds.GAMEMODE.getBird().getVelocityY() + bird.getPosY());
+			//AngryBirds.GAMEMODE.getBird()
+				//	.setVelocityY(AngryBirds.GAMEMODE.getBird().getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
+			
+			for (Gravity g : gravity_list){
+				g.agis_sur(bird);
+				
+				for (Pig p : pigs)
+					g.agis_sur(p);
+			}
 
 			// conditions de victoire
 			for(int i = pigs.size()-1; i>= 0 ; i--) {
-				if (Animal.distance((Animal)bird, (Animal)pigs.get(i)) < 35) {
+				if (Collision.distance(bird, pigs.get(i)) < 35) {
 					pigs.remove(i);
 					AngryBirds.GAMECORE.stop();
 					AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");

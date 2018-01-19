@@ -16,12 +16,20 @@ public abstract class Animal implements IComponents{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static double distance(Animal a1, Animal a2) {
-		double dx = a1.getPosX() - a2.getPosX();
-		double dy = a1.getPosY() - a2.getPosY();
-		return Math.sqrt(dx * dx + dy * dy);
-	}
+	private double velocityX, velocityY; // informations relatives � l'oiseau
 
+	public double getVelocityX() {
+		return velocityX;
+	}
+	public void setVelocityX(double velocityX) {
+		this.velocityX = velocityX;
+	}
+	public double getVelocityY() {
+		return velocityY;
+	}
+	public void setVelocityY(double velocityY) {
+		this.velocityY = velocityY;
+	}
 	public double getPosY() {
 		return posY;
 	}

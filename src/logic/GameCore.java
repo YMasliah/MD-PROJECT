@@ -29,7 +29,7 @@ public class GameCore {
 
 	private static GameCore INSTANCE;
 
-	private double velocityX, velocityY; // informations relatives � l'oiseau
+
 	private Gravity gravity;
 	private String message; // message � afficher en haut de l'�cran
 	private Status status;
@@ -53,21 +53,20 @@ public class GameCore {
 	// d�but de partie
 	public void start() {
 		setStatus(Status.playable);
-		velocityX = 0;
-		velocityY = 0;
+
 		message = "Choisissez l'angle et la vitesse.";
 	}
 
 	// fin de partie
 	void stop() {
-		velocityX = 0;
-		velocityY = 0;
+		AngryBirds.GAMEMODE.getBird().setVelocityX(0);
+		AngryBirds.GAMEMODE.getBird().setVelocityY(0);
 		setStatus(Status.try_again);
 	}
 
 	public void launchBird(int x, int y) {
-		velocityX = (AngryBirds.GAMEMODE.getBird().getPosX() - x) / 20.0;
-		velocityY = (AngryBirds.GAMEMODE.getBird().getPosY() - y) / 20.0;
+		AngryBirds.GAMEMODE.getBird().setVelocityX((AngryBirds.GAMEMODE.getBird().getPosX() - x) / 20.0);
+		AngryBirds.GAMEMODE.getBird().setVelocityY((AngryBirds.GAMEMODE.getBird().getPosY() - y) / 20.0);
 		status = Status.processing;
 		message = "L'oiseau prend sont envol";
 	}
@@ -88,24 +87,8 @@ public class GameCore {
 		return message;
 	}
 
-	public double getVelocityX() {
-		return velocityX;
-	}
-
-	public double getVelocityY() {
-		return velocityY;
-	}
-
 	public Gravity getGravity() {
 		return gravity;
-	}
-
-	public void setVelocityX(double velocityX) {
-		this.velocityX = velocityX;
-	}
-
-	public void setVelocityY(double velocityY) {
-		this.velocityY = velocityY;
 	}
 
 	public void setMessage(String message) {
