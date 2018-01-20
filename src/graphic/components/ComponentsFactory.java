@@ -16,6 +16,8 @@ public class ComponentsFactory {
 			return new Messages();
 		} else if (componentsType.equalsIgnoreCase("PIG")) {
 			return new PigView();
+		} else if (componentsType.equalsIgnoreCase("OVEN")) {
+			return new OvenView();
 		}
 
 		return null;

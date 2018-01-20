@@ -1,6 +1,5 @@
 package graphic.components;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,7 +12,6 @@ import main.AngryBirds;
 
 public class BirdView implements IComponents {
 	public void draw(Graphics2D g) {
-		g.setColor(Color.RED);
 		if (AngryBirds.GAMECORE.getStatus() == Status.playable) {
 			g.drawLine((int) AngryBirds.GAMEMODE.getBird().getPosX(), (int) AngryBirds.GAMEMODE.getBird().getPosY(),
 					AngryBirds.GRAPHICCORE.getPosX(), AngryBirds.GRAPHICCORE.getPosY());
