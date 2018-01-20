@@ -2,10 +2,9 @@ package logic;
 
 import java.util.ArrayList;
 
-import bean.Gravity;
-import bean.Pig;
-import logic.GameCore.Status;
-import main.AngryBirds;
+import bean.animal.Bird;
+import bean.animal.Pig;
+import bean.withgravity.Oven;
 
 /**
  * 
@@ -22,54 +21,20 @@ import main.AngryBirds;
  * 
  * 
  */
-public class GameCore {
+public abstract class GameCore {
 	public enum Status {
 		playable, processing, try_again, game_over
 	}
 
-	private static GameCore INSTANCE;
+	private final int velocityXPower = 20;
+	private final int velocityYPower = 20;
 
-
-	private Gravity gravity;
+	private Bird bird;
+	private ArrayList<Pig> pigs = new ArrayList<>();
+	private ArrayList<Oven> ovens = new ArrayList<>();
 	private String message; // message � afficher en haut de l'�cran
 	private Status status;
 	private int score; // nombre de fois o� le joueur a gagn�
-
-	// constructeur
-	private GameCore() {
-		gravity = new Gravity();
-		gravity.setGravity(0.1);
-		this.score = 0;
-		start();
-	}
-
-	public synchronized static GameCore getGameCore() {
-		if (INSTANCE == null) {
-			INSTANCE = new GameCore();
-		}
-		return INSTANCE;
-	}
-
-	// d�but de partie
-	public void start() {
-		setStatus(Status.playable);
-
-		message = "Choisissez l'angle et la vitesse.";
-	}
-
-	// fin de partie
-	void stop() {
-		AngryBirds.GAMEMODE.getBird().setVelocityX(0);
-		AngryBirds.GAMEMODE.getBird().setVelocityY(0);
-		setStatus(Status.try_again);
-	}
-
-	public void launchBird(int x, int y) {
-		AngryBirds.GAMEMODE.getBird().setVelocityX((AngryBirds.GAMEMODE.getBird().getPosX() - x) / 20.0);
-		AngryBirds.GAMEMODE.getBird().setVelocityY((AngryBirds.GAMEMODE.getBird().getPosY() - y) / 20.0);
-		status = Status.processing;
-		message = "L'oiseau prend sont envol";
-	}
 
 	public Status getStatus() {
 		return status;
@@ -87,10 +52,6 @@ public class GameCore {
 		return message;
 	}
 
-	public Gravity getGravity() {
-		return gravity;
-	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
@@ -99,4 +60,35 @@ public class GameCore {
 		this.score = score;
 	}
 
+	public int getVelocityXPower() {
+		return velocityXPower;
+	}
+
+	public int getVelocityYPower() {
+		return velocityYPower;
+	}
+
+	public Bird getBird() {
+		return bird;
+	}
+
+	public void setBird(Bird bird) {
+		this.bird = bird;
+	}
+
+	public ArrayList<Pig> getPigs() {
+		return pigs;
+	}
+
+	public void setPigs(ArrayList<Pig> pigs) {
+		this.pigs = pigs;
+	}
+
+	public ArrayList<Oven> getOvens() {
+		return ovens;
+	}
+
+	public void setOvens(ArrayList<Oven> ovens) {
+		this.ovens = ovens;
+	}
 }

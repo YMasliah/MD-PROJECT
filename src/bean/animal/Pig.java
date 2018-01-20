@@ -1,10 +1,11 @@
 /**
  * 
  */
-package bean;
+package bean.animal;
 
 import java.awt.Graphics2D;
 
+import bean.Animal;
 import graphic.components.ComponentsFactory;
 
 /**

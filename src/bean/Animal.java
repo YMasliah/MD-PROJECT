@@ -3,7 +3,7 @@ package bean;
 import graphic.components.IComponents;
 import logic.Collision;
 
-public abstract class Animal implements IComponents{
+public abstract class Animal extends CollidableObject implements IComponents{
 
 	private double posX;
 	private double posY;
@@ -13,10 +13,13 @@ public abstract class Animal implements IComponents{
 		this.setPosY(y);
 	}
 	public Animal() {
+		this.posX = 0;
+		this.posY = 0;
 		// TODO Auto-generated constructor stub
 	}
 	
 	private double velocityX, velocityY; // informations relatives � l'oiseau
+	private boolean collided;
 
 	public double getVelocityX() {
 		return velocityX;
@@ -43,6 +46,14 @@ public abstract class Animal implements IComponents{
 		this.posX = posX;
 	}
 	
-	public void collisionWith(Animal a, Collision c){}
+	public void collisionWith(Animal a, Collision c){
+		this.setCollided(true);
+	}
+	public boolean isCollided() {
+		return collided;
+	}
+	public void setCollided(boolean collided) {
+		this.collided = collided;
+	}
 
 }

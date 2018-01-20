@@ -3,9 +3,10 @@ package logic;
 import java.util.ArrayList;
 
 import bean.Animal;
-import bean.Bird;
-import bean.Oven;
-import bean.Pig;
+
+import bean.animal.Bird;
+import bean.animal.Pig;
+import bean.withgravity.Oven;
 
 public class Collision {
 
@@ -18,14 +19,17 @@ public class Collision {
 	public void add_animal(ArrayList<Pig> pigs) {
 		liste_animaux.addAll(pigs);
 	}
+
 	public void add_bird(Bird bird) {
-		liste_animaux.add(bird);		
-		
+		liste_animaux.add(bird);
+
 	}
+
 	public void add_ovens(ArrayList<Oven> ovens) {
 		liste_animaux.addAll(ovens);
-		
+
 	}
+
 	public void clearManager() {
 		liste_animaux.clear();
 	}
@@ -37,33 +41,29 @@ public class Collision {
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
-	// 0 = aucune collision, 1 = collision bird et pig
+	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et blackhole
 	public int CheckCollision() {
-		
+
 		for (int i = 0; i < liste_animaux.size(); i++) {
-			//System.out.println(liste_animaux.get(i).getClass());
+			// System.out.println(liste_animaux.get(i).getClass());
 			for (int j = 0; j < liste_animaux.size(); j++) {
-				if ((i != j) && (Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 35)) {
-//					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
-//					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
-					
-					if (liste_animaux.get(i) instanceof Pig && liste_animaux.get(j) instanceof Pig)
-						System.out.println(liste_animaux.get(i).getClass());
-						return 1;
+				if (i != j && Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 35
+						&& liste_animaux.get(j) instanceof Pig && liste_animaux.get(i) instanceof Bird) {
+					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
+					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
+
+					return 1;
+
 				}
 				if (i != j && liste_animaux.get(j) instanceof Oven && liste_animaux.get(i) instanceof Bird
 						&& Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 100) {
-					liste_animaux.get(i).collisionWith(liste_animaux.get(j),this);
+					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
 					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
-					System.out.println(liste_animaux.get(j).getClass());
 					return 2;
 				}
 			}
 		}
 		return 0;
 	}
-
-
-
 
 }

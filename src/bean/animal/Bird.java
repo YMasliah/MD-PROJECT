@@ -1,24 +1,25 @@
 /**
  * 
  */
-package bean;
+package bean.animal;
 
 import java.awt.Graphics2D;
 
+import bean.Animal;
 import graphic.components.ComponentsFactory;
 
 /**
- * @author arthur
+ * @author masliah yann
  *
  */
-public class Oven extends Animal {
+public class Bird extends Animal {
 
-	public Oven() {
+	public Bird() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Oven(double x, double y) {
+	public Bird(double x, double y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
@@ -28,6 +29,6 @@ public class Oven extends Animal {
 	 */
 	@Override
 	public void draw(Graphics2D g) {
-		ComponentsFactory.getComponents("OVEN");		
+		ComponentsFactory.getComponents("Bird");		
 	}
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import bean.Oven;
+import bean.withgravity.Oven;
 import main.AngryBirds;
 
 public class OvenView implements IComponents {

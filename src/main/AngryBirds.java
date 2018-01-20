@@ -8,8 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import graphic.GraphicCore;
-import graphic.MotionListener;
-import logic.GameCore;
+import graphic.GraphicCoreWithMotionListener;
 import logic.GameMode;
 
 /**
@@ -21,25 +20,16 @@ import logic.GameMode;
  * GCore = GraphicCore.getGraphicCore(DefaultInteractiveWindows)
  * ...
  */
-public class AngryBirds extends Launcher {
-	/**
-	 * @throws Exception
-	 */
-	public AngryBirds() throws Exception {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+public class AngryBirds {
 
-	public static GameCore GAMECORE = GameCore.getGameCore();
-	public static GraphicCore GRAPHICCORE = GraphicCore.getGraphicCore();
+	public static GraphicCoreWithMotionListener GRAPHICCORE = GraphicCoreWithMotionListener.getGraphicCoreWithMotionListener();
 	public static GameMode GAMEMODE = GameMode.getGameMode();
-	public static MotionListener LISTENER = MotionListener.getMotionListener();
 	
 	// met le jeu dans une fen�tre et rajoute son listener
 	public static void main(String[] args) {
 		Frame frame = new Frame("Oiseau pas content");
 		final GraphicCore obj = GRAPHICCORE;
-		GRAPHICCORE.addListener();
+
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent event) {
 				System.exit(0);
