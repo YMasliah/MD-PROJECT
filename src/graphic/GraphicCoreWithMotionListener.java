@@ -8,14 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import logic.GameCore.Status;
 import main.AngryBirds;
 
 /**
  * @author masliah yann
  *
  */
-public class GraphicCoreWithMotionListener extends GraphicCore implements Listener, MouseListener, MouseMotionListener {	
+public class GraphicCoreWithMotionListener extends GraphicCore implements MouseListener, MouseMotionListener {	
 	/**
 	 * 
 	 */
@@ -36,6 +35,15 @@ public class GraphicCoreWithMotionListener extends GraphicCore implements Listen
 		}
 		return INSTANCE;
 	}
+
+	/* (non-Javadoc)
+	 * @see graphic.Listener#mouvement(java.awt.Event)
+	 */
+	public void mouvement(ComponentEvent e) {
+		setPosX(((MouseEvent) e).getX());
+		setPosY(((MouseEvent) e).getY());
+		repaint();
+	}
 	
 	// gestion des �v�nements souris
 	public void mouseClicked(MouseEvent e) {
@@ -51,7 +59,8 @@ public class GraphicCoreWithMotionListener extends GraphicCore implements Listen
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		action(e);
+		AngryBirds.GAMEMODE.action(e);
+		repaint();
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -60,29 +69,6 @@ public class GraphicCoreWithMotionListener extends GraphicCore implements Listen
 
 	public void mouseMoved(MouseEvent e) {
 		mouvement(e);
-	}
-
-	/* (non-Javadoc)
-	 * @see graphic.Listener#action(java.awt.Event)
-	 */
-	@Override
-	public void action(ComponentEvent e) {
-		if (AngryBirds.GAMEMODE.getStatus() == Status.game_over || AngryBirds.GAMEMODE.getStatus() == Status.try_again) {
-			AngryBirds.GAMEMODE.newRound();
-		} else if (AngryBirds.GAMEMODE.getStatus() == Status.playable) {
-			AngryBirds.GAMEMODE.launchBird(((MouseEvent) e).getX(), ((MouseEvent) e).getY());
-		}
-		repaint();
-	}
-
-	/* (non-Javadoc)
-	 * @see graphic.Listener#mouvement(java.awt.Event)
-	 */
-	@Override
-	public void mouvement(ComponentEvent e) {
-		setPosX(((MouseEvent) e).getX());
-		setPosY(((MouseEvent) e).getY());
-		repaint();
 	}
 	
 	public int getPosX() {

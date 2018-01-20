@@ -2,8 +2,8 @@ package logic;
 
 import java.util.ArrayList;
 
-import bean.Bird;
-import bean.Pig;
+import bean.animal.Bird;
+import bean.animal.Pig;
 
 /**
  * 

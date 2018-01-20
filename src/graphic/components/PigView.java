@@ -19,7 +19,7 @@ public class PigView implements IComponents {
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			for(bean.Pig pig : AngryBirds.GAMEMODE.getPigs()) {
+			for(bean.animal.Pig pig : AngryBirds.GAMEMODE.getPigs()) {
 				
 				g.drawImage(img, (int) pig.getPosX() - 20, (int) pig.getPosY() - 20, 40, 40, null);
 			}

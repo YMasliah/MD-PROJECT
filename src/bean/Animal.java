@@ -3,7 +3,7 @@ package bean;
 import graphic.components.IComponents;
 import logic.Collision;
 
-public abstract class Animal implements IComponents{
+public abstract class Animal extends CollidableObject implements IComponents{
 
 	private double posX;
 	private double posY;

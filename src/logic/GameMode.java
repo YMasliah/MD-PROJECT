@@ -3,12 +3,17 @@
  */
 package logic;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import bean.Bird;
-import bean.Gravity;
-import bean.Oven;
-import bean.Pig;
+import bean.IGravity;
+import bean.animal.Bird;
+import bean.animal.Pig;
+import bean.withgravity.GameGravity;
+import bean.withgravity.Oven;
+import bean.withgravity.Vent;
+import logic.GameCore.Status;
 import main.AngryBirds;
 
 /**
@@ -18,7 +23,7 @@ import main.AngryBirds;
 public class GameMode extends GameCore {
 
 	private ArrayList<Oven> ovens = new ArrayList<>();
-	private ArrayList<Gravity> gravity_list = new ArrayList<>();
+	private ArrayList<IGravity> gravity_list = new ArrayList<>();
 	
 	private final int pigCountInit;
 	private final int birdCountInit;
@@ -61,10 +66,14 @@ public class GameMode extends GameCore {
 		AngryBirds.GRAPHICCORE.addElement("PIG");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
 		
-		gravity_list.add(new Gravity(0.1)); //
+		gravity_list.add(new GameGravity(0.1)); //
+		gravity_list.add(new Vent(0.1)); //
 	}
 	
-	// d�but de partie
+	/**
+	 * debut de partie
+	 * a refaire
+	 */
 	public void newRound() {
 		if(lives < 1 || getPigs().size() == 0) {
 			if(lives==0){
@@ -114,10 +123,8 @@ public class GameMode extends GameCore {
 			// moteur physique
 			getBird().setPosX(getBird().getVelocityX() + getBird().getPosX());
 			getBird().setPosY(getBird().getVelocityY() + getBird().getPosY());
-			//getBird()
-				//	.setVelocityY(getBird().getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 			
-			for (Gravity g : gravity_list){
+			for (IGravity g : gravity_list){
 				g.agis_sur(getBird());
 				
 				for (Pig p : getPigs())
@@ -141,6 +148,18 @@ public class GameMode extends GameCore {
 		}
 	}
 
+	/**
+	 * the user perform an action like pressing a button
+	 * @param e
+	 */
+	public void action(ComponentEvent e) {
+		if (getStatus() == Status.game_over || getStatus() == Status.try_again) {
+			newRound();
+		} else if (getStatus() == Status.playable) {
+			launchBird(((MouseEvent) e).getX(), ((MouseEvent) e).getY());
+		}
+	}
+	
 	public int getBirdCount() {
 		return lives;
 	}
