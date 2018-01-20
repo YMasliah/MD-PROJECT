@@ -35,7 +35,6 @@ public class Collision {
 			}
 			if (listeObjects.get(i).getPosX() < 20 || listeObjects.get(i).getPosX() > 780
 					|| listeObjects.get(i).getPosY() < 0 || listeObjects.get(i).getPosY() > 480) {
-				System.out.println(listeObjects);
 				temp = new CollisionReturnValue();
 				temp.setCollisionType(CollisionTypes.WALL);
 				returnValue.add(temp);

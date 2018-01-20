@@ -7,6 +7,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.net.ssl.SSLEngineResult.Status;
+
 import bean.Animal;
 import bean.IGravity;
 import bean.animal.Bird;
@@ -73,6 +75,7 @@ public class GameMode extends GameCore {
 			round = new GameRound(birdCountInit);
 			round.setBird(new Bird(100, 400));
 			round.addOven(new Oven(Math.random() * 500 + 100, 300,-0.2));
+			round.addOven(new Oven(Math.random() * 500 + 100, 300,-0.2));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
 				round.getPigs().add(new Pig(Math.random() * 500 + 200, 480 - Math.random() * 100));
@@ -116,14 +119,12 @@ public class GameMode extends GameCore {
 					((Oven) col.getObjectJ()).agis_sur((Animal) col.getObjectI());
 					break;
 				case PIG:
-					System.out.println("hi");
 					round.getPigs().remove(round.getPigs().indexOf(((Pig) col.getObjectJ())));
 					setStatus(GameStatus.try_again);
 					setMessage("Gagn� : cliquez pour recommencer.");
 					round.setScore(round.getScore() + 1);
 					break;
 				case WALL:
-					System.out.println("pourquoiii");
 					setStatus(GameStatus.try_again);
 					round.setLives(round.getLives() - 1);
 					setMessage("Perdu : cliquez pour recommencer.");
@@ -153,6 +154,8 @@ public class GameMode extends GameCore {
 	 * @param e
 	 */
 	public void action(ComponentEvent e) {
+		if (getStatus() == GameStatus.processing)
+			return;
 		if (getStatus() != GameStatus.playable) {
 			roundProcessing();
 		} else {
