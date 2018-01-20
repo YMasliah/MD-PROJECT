@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import bean.IGravity;
 import bean.animal.Bird;
 import bean.animal.Pig;
+import bean.withgravity.GameGravity;
+import bean.withgravity.Oven;
 import main.AngryBirds;
 
 /**
@@ -52,23 +54,25 @@ public class GameMode extends GameCore {
 		}
 		return INSTANCE;
 	}
-	
+
 	private void init() {
 		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
 		AngryBirds.GRAPHICCORE.addElement("DECOR");
 		AngryBirds.GRAPHICCORE.addElement("BIRD");
 		AngryBirds.GRAPHICCORE.addElement("PIG");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
+		AngryBirds.GRAPHICCORE.addElement("OVEN");
 	}
-	
+
 	/**
-	 * debut de partie
-	 * a refaire
+	 * debut de partie a refaire
 	 */
 	public void roundProcessing() {
 		if(round == null || round.processing() == Status.game_over) {
 			round = new GameRound(birdCountInit);
 			round.setBird(new Bird(100, 400));
+			round.setOvens(new ArrayList<>());
+			round.getOvens().add(new Oven(Math.random() * 500 + 100, 300));
 			round.setPigs(new ArrayList<>());
 			for(int i = 0; i<pigCountInit;i++) {
 				round.getPigs().add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
@@ -82,6 +86,10 @@ public class GameMode extends GameCore {
 		} else if(round.processing() == Status.try_again) {
 			round.setBird(new Bird(100, 400));
 		}
+		
+		collisionManager.add_bird(round.getBird());
+		collisionManager.add_animal(round.getPigs());
+		collisionManager.add_ovens(round.getOvens());
 		setMessage("Choisissez l'angle et la vitesse.");
 		setStatus(Status.playable);
 	}
@@ -105,9 +113,15 @@ public class GameMode extends GameCore {
 				
 				for (Pig p : round.getPigs())
 					g.agis_sur(p);
-			}
 
-			// conditions de victoire
+			}
+			int CHECK = collisionManager.CheckCollision(); //
+			if (CHECK == 2) {
+				GameGravity blackhole = new GameGravity(-0.2);
+				blackhole.agis_sur(round.getBird());
+			}
+				
+				
 			for(int i = round.getPigs().size()-1; i>= 0 ; i--) {
 				if (Collision.distance(round.getBird(), round.getPigs().get(i)) < 35) {
 					round.getPigs().remove(i);
@@ -129,6 +143,7 @@ public class GameMode extends GameCore {
 
 	/**
 	 * the user perform an action like pressing a button
+	 * 
 	 * @param e
 	 */
 	public void action(ComponentEvent e) {
@@ -146,6 +161,7 @@ public class GameMode extends GameCore {
 	public int getBirdCountInit() {
 		return birdCountInit;
 	}
+
 
 	public GameRound getRound() {
 		return round;

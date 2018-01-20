@@ -15,6 +15,7 @@ public abstract class Animal extends CollidableObject implements IComponents{
 	}
 	
 	private double velocityX, velocityY; // informations relatives � l'oiseau
+	private boolean collided;
 
 	public double getVelocityX() {
 		return velocityX;
@@ -27,6 +28,13 @@ public abstract class Animal extends CollidableObject implements IComponents{
 	}
 	public void setVelocityY(double velocityY) {
 		this.velocityY = velocityY;
+	}
+	
+	public boolean isCollided() {
+		return collided;
+	}
+	public void setCollided(boolean collided) {
+		this.collided = collided;
 	}
 
 }

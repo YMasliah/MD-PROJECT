@@ -49,5 +49,4 @@ public abstract class GameCore {
 	public int getVelocityYPower() {
 		return velocityYPower;
 	}
-
 }

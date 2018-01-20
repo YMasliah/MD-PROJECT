@@ -5,17 +5,32 @@ import java.util.ArrayList;
 import bean.CollidableObject;
 import bean.animal.Bird;
 import bean.animal.Pig;
+import bean.withgravity.Oven;
 
 public class Collision {
 
-	private ArrayList<CollidableObject> listeObjets;
+	private ArrayList<CollidableObject> liste_animaux;
 
 	public Collision() {
-		listeObjets = new ArrayList<CollidableObject>();
+		liste_animaux = new ArrayList<CollidableObject>();
 	}
 
-	public void add_animal(ArrayList<CollidableObject> a) {
-		listeObjets = a;
+	public void add_animal(ArrayList<Pig> pigs) {
+		liste_animaux.addAll(pigs);
+	}
+
+	public void add_bird(Bird bird) {
+		liste_animaux.add(bird);
+
+	}
+
+	public void add_ovens(ArrayList<Oven> ovens) {
+		liste_animaux.addAll(ovens);
+
+	}
+
+	public void clearManager() {
+		liste_animaux.clear();
 	}
 
 	// calcule la distance entre deux animaux
@@ -25,18 +40,29 @@ public class Collision {
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
-	// 0 = aucune collision, 1 = collision bird et pig
+	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et blackhole
 	public int CheckCollision() {
-		for (int i = 0; i < listeObjets.size(); i++) {
-			for (int j = 0; j < listeObjets.size(); j++) {
-				if ((i != j) && (Collision.distance(listeObjets.get(i), listeObjets.get(j)) < 35)) {
-					listeObjets.get(i).collisionWith(listeObjets.get(j), this);
-					listeObjets.get(j).collisionWith(listeObjets.get(i), this);
-					if (listeObjets.get(i) instanceof Bird && listeObjets.get(j) instanceof Pig)
-						return 1;
+
+		for (int i = 0; i < liste_animaux.size(); i++) {
+			// System.out.println(liste_animaux.get(i).getClass());
+			for (int j = 0; j < liste_animaux.size(); j++) {
+				if (i != j && Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 35
+						&& liste_animaux.get(j) instanceof Pig && liste_animaux.get(i) instanceof Bird) {
+					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
+					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
+
+					return 1;
+
+				}
+				if (i != j && liste_animaux.get(j) instanceof Oven && liste_animaux.get(i) instanceof Bird
+						&& Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 100) {
+					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
+					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
+					return 2;
 				}
 			}
 		}
 		return 0;
 	}
+
 }
