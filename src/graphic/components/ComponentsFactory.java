@@ -9,13 +9,13 @@ public class ComponentsFactory {
 		if (componentsType.equalsIgnoreCase("BACKGROUND")) {
 			return new Background();
 		} else if (componentsType.equalsIgnoreCase("BIRD")) {
-			return new Bird();
+			return new BirdView();
 		} else if (componentsType.equalsIgnoreCase("DECOR")) {
 			return new Decor();
 		} else if (componentsType.equalsIgnoreCase("MESSAGES")) {
 			return new Messages();
 		} else if (componentsType.equalsIgnoreCase("PIG")) {
-			return new Pig();
+			return new PigView();
 		}
 
 		return null;

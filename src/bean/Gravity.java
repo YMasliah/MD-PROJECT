@@ -24,7 +24,6 @@ public class Gravity {
 		if (a instanceof Bird){
 			a.setVelocityY(a.getVelocityY() + gravity);
 			
-			System.out.println("test bug");
 		}
 	}
 	

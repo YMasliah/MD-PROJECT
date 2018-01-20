@@ -18,7 +18,7 @@ public class Background implements IComponents{
 		Dimension d = AngryBirds.GRAPHICCORE.getPreferredSize();
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, (int) d.getWidth(), (int) d.getHeight());
-		File file = new File("resources/images/table.jpg");
+		File file = new File("resources/images/b1.png");
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);

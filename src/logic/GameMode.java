@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import bean.Bird;
 import bean.Gravity;
+import bean.Oven;
 import bean.Pig;
 import logic.GameCore.Status;
 import main.AngryBirds;
@@ -19,7 +20,7 @@ public class GameMode {
 
 	private Bird bird = new Bird();
 	private ArrayList<Pig> pigs = new ArrayList<>();
-	
+	private ArrayList<Oven> ovens = new ArrayList<>();
 	private final int pigCountInit;
 	private final int birdCountInit;
 	
@@ -42,7 +43,6 @@ public class GameMode {
 		
 		gravity_list = new ArrayList<Gravity>();
 		gravity_list.add(new Gravity(0.1)); //
-		gravity_list.add(new bean.Vent(0.9));
 		
 		init();
 		new Thread(new Runner()).start();
@@ -148,6 +148,11 @@ public class GameMode {
 
 	public void setPigs(ArrayList<Pig> pigs) {
 		this.pigs = pigs;
+	}
+
+	public ArrayList<Oven> getOvens() {
+		// TODO Auto-generated method stub
+		return ovens;
 	}
 
 	

@@ -11,15 +11,15 @@ import javax.imageio.ImageIO;
 import logic.GameCore.Status;
 import main.AngryBirds;
 
-public class Bird implements IComponents {
+public class BirdView implements IComponents {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
 		if (AngryBirds.GAMECORE.getStatus() == Status.playable) {
 			g.drawLine((int) AngryBirds.GAMEMODE.getBird().getPosX(), (int) AngryBirds.GAMEMODE.getBird().getPosY(),
 					AngryBirds.GRAPHICCORE.getPosX(), AngryBirds.GRAPHICCORE.getPosY());
 		}
-		File fast = new File("resources/images/bird.jpg");
-		File slow = new File("resources/images/raw-bird.jpg");
+		File fast = new File("resources/images/burning-bird.png");
+		File slow = new File("resources/images/raw-bird.png");
 		BufferedImage img;
 		Double speed = new Double(0);
 		try {
@@ -28,21 +28,24 @@ public class Bird implements IComponents {
 					+ Math.pow(Math.abs(AngryBirds.GAMEMODE.getBird().getVelocityX()), 2);
 
 			if (Math.sqrt(speed) > 6) {
-				System.out.println(Math.sqrt(speed));
 				img = ImageIO.read(fast);
-				g.drawImage(img, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
-						(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40, null);
+				g.drawImage(img, null, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
+						(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20);
+				;
+
 			} else {
 
-				if (AngryBirds.GAMECORE.getStatus() != Status.game_over) {
+				if (AngryBirds.GAMECORE.getStatus() != Status.try_again) {
 					img = ImageIO.read(slow);
-					g.drawImage(img, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
-							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40, null);
+					g.drawImage(img, null, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
+							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20);
+					;
 
 				} else {
 					img = ImageIO.read(fast);
-					g.drawImage(img, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
-							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20, 40, 40, null);
+					g.drawImage(img, null, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
+							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20);
+					;
 				}
 			}
 		} catch (IOException e) {

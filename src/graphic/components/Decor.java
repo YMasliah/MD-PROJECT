@@ -2,12 +2,25 @@ package graphic.components;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class Decor implements IComponents{
+import javax.imageio.ImageIO;
+
+import main.AngryBirds;
+
+public class Decor implements IComponents {
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLACK);
-		g.drawLine(0, 500, 800, 500);
-		g.drawLine(100, 500, 100, 400);
+		File file = new File("resources/images/knife.png");
+		BufferedImage img;
+		try {
+			img = ImageIO.read(file);
+			g.drawImage(img, 60, 395, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
