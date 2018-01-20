@@ -14,7 +14,7 @@ import main.AngryBirds;
 public class BirdView implements IComponents {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
-		if (AngryBirds.GAMECORE.getStatus() == Status.playable) {
+		if (AngryBirds.GAMEMODE.getStatus() == Status.playable) {
 			g.drawLine((int) AngryBirds.GAMEMODE.getBird().getPosX(), (int) AngryBirds.GAMEMODE.getBird().getPosY(),
 					AngryBirds.GRAPHICCORE.getPosX(), AngryBirds.GRAPHICCORE.getPosY());
 		}
@@ -35,7 +35,7 @@ public class BirdView implements IComponents {
 
 			} else {
 
-				if (AngryBirds.GAMECORE.getStatus() != Status.try_again) {
+				if (AngryBirds.GAMEMODE.getStatus() != Status.try_again) {
 					img = ImageIO.read(slow);
 					g.drawImage(img, null, (int) AngryBirds.GAMEMODE.getBird().getPosX() - 20,
 							(int) AngryBirds.GAMEMODE.getBird().getPosY() - 20);

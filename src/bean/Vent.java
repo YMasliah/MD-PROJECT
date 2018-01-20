@@ -1,6 +1,5 @@
 package bean;
 
-import main.AngryBirds;
 public class Vent extends Gravity{
 	public Vent(double gravity){
 		super(gravity);

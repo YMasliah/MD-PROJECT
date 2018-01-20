@@ -1,7 +1,5 @@
 package bean;
 
-import main.AngryBirds;
-
 public class Gravity {
 	private double gravity; // gravité
 

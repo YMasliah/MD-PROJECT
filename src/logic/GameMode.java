@@ -9,42 +9,35 @@ import bean.Bird;
 import bean.Gravity;
 import bean.Oven;
 import bean.Pig;
-import logic.GameCore.Status;
 import main.AngryBirds;
 
 /**
  * @author masliah yann
  *
  */
-public class GameMode {
+public class GameMode extends GameCore {
 
-	private Bird bird = new Bird();
-	private ArrayList<Pig> pigs = new ArrayList<>();
 	private ArrayList<Oven> ovens = new ArrayList<>();
+	private ArrayList<Gravity> gravity_list = new ArrayList<>();
+	
 	private final int pigCountInit;
 	private final int birdCountInit;
 	
-	private int birdCount = 0;
+	private int lives;
 	
 	private static GameMode INSTANCE;
-	private ArrayList<Gravity> gravity_list;
 
 	/**
 	 * ca serra dans un builder je crois plus tard
 	 */
 	GameMode() {
+		setScore(0);
+		lives = 0;
 		pigCountInit = 2;
 		birdCountInit = 4;
-		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
-		AngryBirds.GRAPHICCORE.addElement("DECOR");
-		AngryBirds.GRAPHICCORE.addElement("BIRD");
-		AngryBirds.GRAPHICCORE.addElement("PIG");
-		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
-		
-		gravity_list = new ArrayList<Gravity>();
-		gravity_list.add(new Gravity(0.1)); //
-		
 		init();
+		newRound();
+		start();
 		new Thread(new Runner()).start();
 	}
 
@@ -61,56 +54,86 @@ public class GameMode {
 		return INSTANCE;
 	}
 	
+	private void init() {
+		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
+		AngryBirds.GRAPHICCORE.addElement("DECOR");
+		AngryBirds.GRAPHICCORE.addElement("BIRD");
+		AngryBirds.GRAPHICCORE.addElement("PIG");
+		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
+		
+		gravity_list.add(new Gravity(0.1)); //
+	}
+	
 	// d�but de partie
-	public void init() {
-		if(birdCount < 1 || pigs.size() == 0) {
-			if(birdCount==0){
-				AngryBirds.GAMECORE.setScore(0);
+	public void newRound() {
+		if(lives < 1 || getPigs().size() == 0) {
+			if(lives==0){
+				setScore(0);
 			}
-			AngryBirds.GAMECORE.setStatus(Status.game_over);
-			birdCount = birdCountInit;
+			setStatus(Status.game_over);
+			lives = birdCountInit;
 		}else{
-			AngryBirds.GAMECORE.setStatus(Status.try_again);
+			setStatus(Status.try_again);
 		}
 		
+		setBird(new Bird(100, 400));
 		
-		bird = new Bird(100, 400);
-		
-		if(AngryBirds.GAMECORE.getStatus() == Status.game_over) {
-			pigs = new ArrayList<>();
+		if(getStatus() == Status.game_over) {
+			setPigs(new ArrayList<>());
 			for(int i = 0; i<pigCountInit;i++) {
-				pigs.add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
+				getPigs().add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
 			}
 		}
-		AngryBirds.GAMECORE.start();
+		start();
 	}
 
+	// d�but de partie
+	public void start() {
+		setStatus(Status.playable);
+		setMessage("Choisissez l'angle et la vitesse.");
+	}
+
+	// fin de partie
+	void stop() {
+		getBird().setVelocityX(0);
+		getBird().setVelocityY(0);
+		setStatus(Status.try_again);
+	}
+
+	public void launchBird(int x, int y) {
+		setBirdCount(getBirdCount()-1);
+		getBird().setVelocityX((getBird().getPosX() - x) / getVelocityXPower());
+		getBird().setVelocityY((getBird().getPosY() - y) / getVelocityYPower());
+		setStatus(Status.processing);
+		setMessage("L'oiseau prend sont envol");
+	}
+	
 	void work() {
-		if (AngryBirds.GAMECORE.getStatus() == Status.processing) {
+		if (getStatus() == Status.processing) {
 
 			// moteur physique
-			bird.setPosX(AngryBirds.GAMEMODE.getBird().getVelocityX() + bird.getPosX());
-			bird.setPosY(AngryBirds.GAMEMODE.getBird().getVelocityY() + bird.getPosY());
-			//AngryBirds.GAMEMODE.getBird()
-				//	.setVelocityY(AngryBirds.GAMEMODE.getBird().getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
+			getBird().setPosX(getBird().getVelocityX() + getBird().getPosX());
+			getBird().setPosY(getBird().getVelocityY() + getBird().getPosY());
+			//getBird()
+				//	.setVelocityY(getBird().getVelocityY() + AngryBirds.GAMECORE.getGravity().getGravity());
 			
 			for (Gravity g : gravity_list){
-				g.agis_sur(bird);
+				g.agis_sur(getBird());
 				
-				for (Pig p : pigs)
+				for (Pig p : getPigs())
 					g.agis_sur(p);
 			}
 
 			// conditions de victoire
-			for(int i = pigs.size()-1; i>= 0 ; i--) {
-				if (Collision.distance(bird, pigs.get(i)) < 35) {
-					pigs.remove(i);
-					AngryBirds.GAMECORE.stop();
-					AngryBirds.GAMECORE.setMessage("Gagn� : cliquez pour recommencer.");
-					AngryBirds.GAMECORE.setScore(AngryBirds.GAMECORE.getScore() + 1);
-				} else if (bird.getPosX() < 20 || bird.getPosX() > 780 || bird.getPosY() < 0 || bird.getPosY() > 480) {
-					AngryBirds.GAMECORE.stop();
-					AngryBirds.GAMECORE.setMessage("Perdu : cliquez pour recommencer.");
+			for(int i = getPigs().size()-1; i>= 0 ; i--) {
+				if (Collision.distance(getBird(), getPigs().get(i)) < 35) {
+					getPigs().remove(i);
+					stop();
+					setMessage("Gagn� : cliquez pour recommencer.");
+					setScore(getScore() + 1);
+				} else if (getBird().getPosX() < 20 || getBird().getPosX() > 780 || getBird().getPosY() < 0 || getBird().getPosY() > 480) {
+					stop();
+					setMessage("Perdu : cliquez pour recommencer.");
 				}
 			}
 			// redessine
@@ -118,20 +141,12 @@ public class GameMode {
 		}
 	}
 
-	public Bird getBird() {
-		return bird;
-	}
-
-	public ArrayList<Pig> getPigs() {
-		return pigs;
-	}
-
 	public int getBirdCount() {
-		return birdCount;
+		return lives;
 	}
 
 	public void setBirdCount(int birdCount) {
-		this.birdCount = birdCount;
+		this.lives = birdCount;
 	}
 
 	public int getPigCountInit() {
@@ -140,14 +155,6 @@ public class GameMode {
 
 	public int getBirdCountInit() {
 		return birdCountInit;
-	}
-
-	public void setBird(Bird bird) {
-		this.bird = bird;
-	}
-
-	public void setPigs(ArrayList<Pig> pigs) {
-		this.pigs = pigs;
 	}
 
 	public ArrayList<Oven> getOvens() {

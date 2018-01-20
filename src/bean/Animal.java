@@ -13,6 +13,8 @@ public abstract class Animal implements IComponents{
 		this.setPosY(y);
 	}
 	public Animal() {
+		this.posX = 0;
+		this.posY = 0;
 		// TODO Auto-generated constructor stub
 	}
 	
