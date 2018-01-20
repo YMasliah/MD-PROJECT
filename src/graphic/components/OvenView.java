@@ -18,7 +18,7 @@ public class OvenView implements IComponents {
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			for(Oven oven : AngryBirds.GAMEMODE.getOvens()) {
+			for(Oven oven : AngryBirds.GAMEMODE.getRound().getOvens()) {
 				g.drawImage(img, (int) oven.getPosX(), (int) oven.getPosY(), 40, 40, null);
 			}
 		} catch (IOException e) {

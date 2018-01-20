@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import bean.IGravity;
 import bean.animal.Bird;
 import bean.animal.Pig;
-import bean.withgravity.GameGravity;
-import bean.withgravity.Oven;
-import bean.withgravity.Vent;
-import logic.GameCore.Status;
 import main.AngryBirds;
 
 /**
@@ -22,28 +18,26 @@ import main.AngryBirds;
  */
 public class GameMode extends GameCore {
 
-	private ArrayList<Oven> ovens = new ArrayList<>();
-	private ArrayList<IGravity> gravity_list = new ArrayList<>();
-	
 	private final int pigCountInit;
 	private final int birdCountInit;
 	
-	private int lives;
-	
+	private GameRound round;
+	private Thread thread;
+	private Collision collisionManager;
+
 	private static GameMode INSTANCE;
 
 	/**
 	 * ca serra dans un builder je crois plus tard
 	 */
-	GameMode() {
-		setScore(0);
-		lives = 0;
+	private GameMode() {
+		collisionManager = new Collision();
 		pigCountInit = 2;
 		birdCountInit = 4;
+		thread = new Thread(new Runner());
 		init();
-		newRound();
-		start();
-		new Thread(new Runner()).start();
+		roundProcessing();
+		thread.start();
 	}
 
 	/**
@@ -65,82 +59,67 @@ public class GameMode extends GameCore {
 		AngryBirds.GRAPHICCORE.addElement("BIRD");
 		AngryBirds.GRAPHICCORE.addElement("PIG");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
-		
-		gravity_list.add(new GameGravity(0.1)); //
-		gravity_list.add(new Vent(0.1)); //
 	}
 	
 	/**
 	 * debut de partie
 	 * a refaire
 	 */
-	public void newRound() {
-		if(lives < 1 || getPigs().size() == 0) {
-			if(lives==0){
-				setScore(0);
-			}
-			setStatus(Status.game_over);
-			lives = birdCountInit;
-		}else{
-			setStatus(Status.try_again);
-		}
-		
-		setBird(new Bird(100, 400));
-		
-		if(getStatus() == Status.game_over) {
-			setPigs(new ArrayList<>());
+	public void roundProcessing() {
+		if(round == null || round.processing() == Status.game_over) {
+			round = new GameRound(birdCountInit);
+			round.setBird(new Bird(100, 400));
+			round.setPigs(new ArrayList<>());
 			for(int i = 0; i<pigCountInit;i++) {
-				getPigs().add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
+				round.getPigs().add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
 			}
+		} else if(round.processing() == Status.processing) {
+			round.setBird(new Bird(100, 400));
+			round.setPigs(new ArrayList<>());
+			for(int i = 0; i<pigCountInit;i++) {
+				round.getPigs().add(new Pig(Math.random() * 500 + 200,480 - Math.random() * 100));
+			}
+		} else if(round.processing() == Status.try_again) {
+			round.setBird(new Bird(100, 400));
 		}
-		start();
-	}
-
-	// d�but de partie
-	public void start() {
-		setStatus(Status.playable);
 		setMessage("Choisissez l'angle et la vitesse.");
-	}
-
-	// fin de partie
-	void stop() {
-		getBird().setVelocityX(0);
-		getBird().setVelocityY(0);
-		setStatus(Status.try_again);
+		setStatus(Status.playable);
 	}
 
 	public void launchBird(int x, int y) {
-		setBirdCount(getBirdCount()-1);
-		getBird().setVelocityX((getBird().getPosX() - x) / getVelocityXPower());
-		getBird().setVelocityY((getBird().getPosY() - y) / getVelocityYPower());
+		round.getBird().setVelocityX((round.getBird().getPosX() - x) / getVelocityXPower());
+		round.getBird().setVelocityY((round.getBird().getPosY() - y) / getVelocityYPower());
 		setStatus(Status.processing);
 		setMessage("L'oiseau prend sont envol");
 	}
 	
-	void work() {
+	public void work() {
 		if (getStatus() == Status.processing) {
 
 			// moteur physique
-			getBird().setPosX(getBird().getVelocityX() + getBird().getPosX());
-			getBird().setPosY(getBird().getVelocityY() + getBird().getPosY());
+			round.getBird().setPosX(round.getBird().getVelocityX() + round.getBird().getPosX());
+			round.getBird().setPosY(round.getBird().getVelocityY() + round.getBird().getPosY());
 			
-			for (IGravity g : gravity_list){
-				g.agis_sur(getBird());
+			for (IGravity g : round.getGravity_list()){
+				g.agis_sur(round.getBird());
 				
-				for (Pig p : getPigs())
+				for (Pig p : round.getPigs())
 					g.agis_sur(p);
 			}
 
 			// conditions de victoire
-			for(int i = getPigs().size()-1; i>= 0 ; i--) {
-				if (Collision.distance(getBird(), getPigs().get(i)) < 35) {
-					getPigs().remove(i);
-					stop();
+			for(int i = round.getPigs().size()-1; i>= 0 ; i--) {
+				if (Collision.distance(round.getBird(), round.getPigs().get(i)) < 35) {
+					round.getPigs().remove(i);
+					setStatus(Status.try_again);
 					setMessage("Gagn� : cliquez pour recommencer.");
-					setScore(getScore() + 1);
-				} else if (getBird().getPosX() < 20 || getBird().getPosX() > 780 || getBird().getPosY() < 0 || getBird().getPosY() > 480) {
-					stop();
+					round.setScore(round.getScore() + 1);
+				} else if (round.getBird().getPosX() < 20 || round.getBird().getPosX() > 780 || round.getBird().getPosY() < 0 || round.getBird().getPosY() > 480) {
+					System.out.println("hi");
+					setStatus(Status.try_again);
+					round.setLives(round.getLives()-1);
 					setMessage("Perdu : cliquez pour recommencer.");
+					break;
 				}
 			}
 			// redessine
@@ -153,19 +132,11 @@ public class GameMode extends GameCore {
 	 * @param e
 	 */
 	public void action(ComponentEvent e) {
-		if (getStatus() == Status.game_over || getStatus() == Status.try_again) {
-			newRound();
-		} else if (getStatus() == Status.playable) {
+		if (getStatus() != Status.playable) {
+			roundProcessing();
+		} else {
 			launchBird(((MouseEvent) e).getX(), ((MouseEvent) e).getY());
 		}
-	}
-	
-	public int getBirdCount() {
-		return lives;
-	}
-
-	public void setBirdCount(int birdCount) {
-		this.lives = birdCount;
 	}
 
 	public int getPigCountInit() {
@@ -176,10 +147,11 @@ public class GameMode extends GameCore {
 		return birdCountInit;
 	}
 
-	public ArrayList<Oven> getOvens() {
-		// TODO Auto-generated method stub
-		return ovens;
+	public GameRound getRound() {
+		return round;
 	}
 
-	
+	public void setRound(GameRound round) {
+		this.round = round;
+	}
 }

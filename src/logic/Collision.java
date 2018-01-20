@@ -2,24 +2,24 @@ package logic;
 
 import java.util.ArrayList;
 
-import bean.Animal;
+import bean.CollidableObject;
 import bean.animal.Bird;
 import bean.animal.Pig;
 
 public class Collision {
 
-	private ArrayList<Animal> liste_animaux;
+	private ArrayList<CollidableObject> listeObjets;
 
 	public Collision() {
-		liste_animaux = new ArrayList<Animal>();
+		listeObjets = new ArrayList<CollidableObject>();
 	}
 
-	public void add_animal(ArrayList<Animal> a) {
-		liste_animaux = a;
+	public void add_animal(ArrayList<CollidableObject> a) {
+		listeObjets = a;
 	}
 
 	// calcule la distance entre deux animaux
-	public static double distance(Animal a1, Animal a2) {
+	public static double distance(CollidableObject a1, CollidableObject a2) {
 		double dx = a1.getPosX() - a2.getPosX();
 		double dy = a1.getPosY() - a2.getPosY();
 		return Math.sqrt(dx * dx + dy * dy);
@@ -27,12 +27,12 @@ public class Collision {
 
 	// 0 = aucune collision, 1 = collision bird et pig
 	public int CheckCollision() {
-		for (int i = 0; i < liste_animaux.size(); i++) {
-			for (int j = 0; j < liste_animaux.size(); j++) {
-				if ((i != j) && (Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 35)) {
-					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
-					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
-					if (liste_animaux.get(i) instanceof Bird && liste_animaux.get(j) instanceof Pig)
+		for (int i = 0; i < listeObjets.size(); i++) {
+			for (int j = 0; j < listeObjets.size(); j++) {
+				if ((i != j) && (Collision.distance(listeObjets.get(i), listeObjets.get(j)) < 35)) {
+					listeObjets.get(i).collisionWith(listeObjets.get(j), this);
+					listeObjets.get(j).collisionWith(listeObjets.get(i), this);
+					if (listeObjets.get(i) instanceof Bird && listeObjets.get(j) instanceof Pig)
 						return 1;
 				}
 			}

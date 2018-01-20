@@ -61,4 +61,8 @@ public abstract class GraphicCore extends Panel {
 	public void addElement(String element) {
 		elements.add(element);
 	}
+	
+	public void clearElements() {
+		elements.clear();
+	}
 }
