@@ -7,13 +7,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import logic.GameCore.Status;
+import logic.GameCore.GameStatus;
 import main.AngryBirds;
 
 public class BirdView implements IComponents {
 	public void draw(Graphics2D g) {
 
-		if (AngryBirds.GAMEMODE.getStatus() == Status.playable) {
+		if (AngryBirds.GAMEMODE.getStatus() == GameStatus.playable) {
 			g.drawLine((int) AngryBirds.GAMEMODE.getRound().getBird().getPosX(), (int) AngryBirds.GAMEMODE.getRound().getBird().getPosY(),
 					AngryBirds.GRAPHICCORE.getPosX(), AngryBirds.GRAPHICCORE.getPosY());
 		}
@@ -34,7 +34,7 @@ public class BirdView implements IComponents {
 
 			} else {
 
-				if (AngryBirds.GAMEMODE.getStatus() != Status.try_again) {
+				if (AngryBirds.GAMEMODE.getStatus() != GameStatus.try_again) {
 					img = ImageIO.read(slow);
 					g.drawImage(img, null, (int) AngryBirds.GAMEMODE.getRound().getBird().getPosX() - 20,
 							(int) AngryBirds.GAMEMODE.getRound().getBird().getPosY() - 20);

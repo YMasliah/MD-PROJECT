@@ -16,7 +16,7 @@ package logic;
  * 
  */
 public abstract class GameCore {
-	public enum Status {
+	public enum GameStatus {
 		playable, processing, try_again, game_over
 	}
 
@@ -24,13 +24,13 @@ public abstract class GameCore {
 	private final int velocityYPower = 20;
 
 	private String message; // message � afficher en haut de l'�cran
-	private Status status;
+	private GameStatus status;
 
-	public Status getStatus() {
+	public GameStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(GameStatus status) {
 		this.status = status;
 	}
 

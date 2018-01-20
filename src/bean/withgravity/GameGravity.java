@@ -1,15 +1,26 @@
 package bean.withgravity;
 
 import bean.Animal;
-import bean.IGravity;
 import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
 
-public class GameGravity extends ObjectWithGravityAura implements IGravity {
+public class GameGravity extends ObjectWithGravityAura {
 	
-	public GameGravity (){
+	public GameGravity() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
+
+	public GameGravity(double x, double y, double gravity) {
+		super(x, y, gravity);
+		// TODO Auto-generated constructor stub
+	}
+
+	public GameGravity(double x, double y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+
 	public GameGravity (double gravity){
 		setGravity(gravity);
 	}

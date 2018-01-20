@@ -1,10 +1,25 @@
 package bean.withgravity;
 
 import bean.Animal;
-import bean.IGravity;
 import bean.ObjectWithGravityAura;
 
-public class Vent extends ObjectWithGravityAura implements IGravity{
+public class Vent extends ObjectWithGravityAura{
+	
+	public Vent() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Vent(double x, double y, double gravity) {
+		super(x, y, gravity);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Vent(double x, double y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Vent(double gravity){
 		setGravity(gravity);
 	}

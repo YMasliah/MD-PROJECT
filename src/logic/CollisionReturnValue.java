@@ -1,14 +1,22 @@
 package logic;
 
+import bean.CollidableObject;
+
 public class CollisionReturnValue {
 
 	public enum CollisionTypes {
-		playable, processing, try_again, game_over
+		PIG, WALL, OVEN
 	}
 	
 	private CollisionTypes collisionType;
-	private int indexI;
-	private int indexJ;
+	private CollidableObject objectI;
+	private CollidableObject objectJ;
+	
+	public CollisionReturnValue() {
+		collisionType = null;
+		objectI = null;
+		objectJ = null;
+	}
 	
 	public CollisionTypes getCollisionType() {
 		return collisionType;
@@ -16,17 +24,22 @@ public class CollisionReturnValue {
 	public void setCollisionType(CollisionTypes collisionType) {
 		this.collisionType = collisionType;
 	}
-	public int getIndexI() {
-		return indexI;
+
+	public CollidableObject getObjectI() {
+		return objectI;
 	}
-	public void setIndexI(int indexI) {
-		this.indexI = indexI;
+
+	public void setObjectI(CollidableObject objectI) {
+		this.objectI = objectI;
 	}
-	public int getIndexJ() {
-		return indexJ;
+
+	public CollidableObject getObjectJ() {
+		return objectJ;
 	}
-	public void setIndexJ(int indexJ) {
-		this.indexJ = indexJ;
+
+	public void setObjectJ(CollidableObject objectJ) {
+		this.objectJ = objectJ;
 	}
+	
 	
 }

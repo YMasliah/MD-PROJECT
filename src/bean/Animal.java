@@ -4,18 +4,15 @@ import graphic.components.IComponents;
 
 public abstract class Animal extends CollidableObject implements IComponents{
 
-	public Animal(double x, double y) {
-		setPosX(x);
-		setPosY(y);
-	}
 	public Animal() {
-		setPosX(0);
-		setPosY(0);
+		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	public Animal(double x, double y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
 	private double velocityX, velocityY; // informations relatives � l'oiseau
-	private boolean collided;
 
 	public double getVelocityX() {
 		return velocityX;
@@ -29,12 +26,4 @@ public abstract class Animal extends CollidableObject implements IComponents{
 	public void setVelocityY(double velocityY) {
 		this.velocityY = velocityY;
 	}
-	
-	public boolean isCollided() {
-		return collided;
-	}
-	public void setCollided(boolean collided) {
-		this.collided = collided;
-	}
-
 }

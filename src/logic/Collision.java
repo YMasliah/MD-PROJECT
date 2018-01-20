@@ -3,34 +3,18 @@ package logic;
 import java.util.ArrayList;
 
 import bean.CollidableObject;
+import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
 import bean.animal.Pig;
 import bean.withgravity.Oven;
+import logic.CollisionReturnValue.CollisionTypes;
 
 public class Collision {
 
-	private ArrayList<CollidableObject> liste_animaux;
+	private ArrayList<CollidableObject> listeObjects;
 
 	public Collision() {
-		liste_animaux = new ArrayList<CollidableObject>();
-	}
-
-	public void add_animal(ArrayList<Pig> pigs) {
-		liste_animaux.addAll(pigs);
-	}
-
-	public void add_bird(Bird bird) {
-		liste_animaux.add(bird);
-
-	}
-
-	public void add_ovens(ArrayList<Oven> ovens) {
-		liste_animaux.addAll(ovens);
-
-	}
-
-	public void clearManager() {
-		liste_animaux.clear();
+		listeObjects = new ArrayList<CollidableObject>();
 	}
 
 	// calcule la distance entre deux animaux
@@ -41,28 +25,75 @@ public class Collision {
 	}
 
 	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et blackhole
-	public int CheckCollision() {
-
-		for (int i = 0; i < liste_animaux.size(); i++) {
-			// System.out.println(liste_animaux.get(i).getClass());
-			for (int j = 0; j < liste_animaux.size(); j++) {
-				if (i != j && Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 35
-						&& liste_animaux.get(j) instanceof Pig && liste_animaux.get(i) instanceof Bird) {
-					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
-					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
-
-					return 1;
-
+	public ArrayList<CollisionReturnValue> CheckCollision() {
+		ArrayList<CollisionReturnValue> returnValue = new ArrayList<CollisionReturnValue>();
+		CollisionReturnValue temp;		
+		
+		for (int i = 0; i < listeObjects.size(); i++) {
+			if (!(listeObjects.get(i) instanceof Bird)) {
+				continue;
+			}
+			if (listeObjects.get(i).getPosX() < 20 || listeObjects.get(i).getPosX() > 780
+					|| listeObjects.get(i).getPosY() < 0 || listeObjects.get(i).getPosY() > 480) {
+				System.out.println(listeObjects);
+				temp = new CollisionReturnValue();
+				temp.setCollisionType(CollisionTypes.WALL);
+				returnValue.add(temp);
+				break;
+			}
+			for (int j = i; j < listeObjects.size(); j++) {
+				if (i == j) {
+					continue;
 				}
-				if (i != j && liste_animaux.get(j) instanceof Oven && liste_animaux.get(i) instanceof Bird
-						&& Collision.distance(liste_animaux.get(i), liste_animaux.get(j)) < 100) {
-					liste_animaux.get(i).collisionWith(liste_animaux.get(j), this);
-					liste_animaux.get(j).collisionWith(liste_animaux.get(i), this);
-					return 2;
+				if (listeObjects.get(j) instanceof Pig
+						&& Collision.distance(listeObjects.get(i), listeObjects.get(j)) < 35) {
+					temp = new CollisionReturnValue();
+					temp.setCollisionType(CollisionTypes.PIG);
+					temp.setObjectI(listeObjects.get(i));
+					temp.setObjectJ(listeObjects.get(j));
+					returnValue.add(temp);
+					return returnValue;
+				} else if (listeObjects.get(j) instanceof Oven
+						&& Collision.distance(listeObjects.get(i), listeObjects.get(j)) < 100) {
+					temp = new CollisionReturnValue();
+					temp.setCollisionType(CollisionTypes.OVEN);
+					temp.setObjectI(listeObjects.get(i));
+					temp.setObjectJ(listeObjects.get(j));
+					returnValue.add(temp);
 				}
 			}
 		}
-		return 0;
+		return returnValue;
+	}
+	
+	public void addCollidableObject(CollidableObject object) {
+		listeObjects.add(object);
+	}
+	
+	public void addCollidableObjects(ArrayList<CollidableObject> objects) {
+		listeObjects.addAll(objects);
+	}
+
+	public void clearManager() {
+		listeObjects.clear();
+	}
+
+	/**
+	 * a supprimer
+	 * @param pigs
+	 */
+	public void addCollidablePigs(ArrayList<Pig> pigs) {
+		listeObjects.addAll(pigs);
+		
+	}
+	
+	/**
+	 * a supprimer
+	 * @param objects
+	 */
+	public void addCollidableGravityObject(ArrayList<ObjectWithGravityAura> objects) {
+		listeObjects.addAll(objects);
+		
 	}
 
 }

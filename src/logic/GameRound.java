@@ -5,13 +5,12 @@ package logic;
 
 import java.util.ArrayList;
 
-import bean.IGravity;
+import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
 import bean.animal.Pig;
 import bean.withgravity.GameGravity;
 import bean.withgravity.Oven;
 import bean.withgravity.Vent;
-import logic.GameCore.Status;
 
 /**
  * @author masliah yann
@@ -19,10 +18,13 @@ import logic.GameCore.Status;
  */
 public class GameRound {
 
+	public enum RoundStatus {
+		try_again, round_win, round_lost
+	}
+	
 	private int lives;
 	private int score; // nombre de fois o� le joueur a gagn�
-	private ArrayList<Oven> ovens = new ArrayList<>();
-	private ArrayList<IGravity> gravity_list = new ArrayList<>();
+	private ArrayList<ObjectWithGravityAura> gravity_list = new ArrayList<>();
 	
 	private Bird bird;
 	private ArrayList<Pig> pigs = new ArrayList<>();
@@ -38,15 +40,15 @@ public class GameRound {
 	 * debut de partie
 	 * a refaire
 	 */
-	public Status processing() {
+	public RoundStatus processing() {
 		if(getPigs().size() == 0) {
-			return Status.processing;
+			return RoundStatus.round_win;
 		}
 		else if(lives==0){
-			return Status.game_over;
+			return RoundStatus.round_lost;
 		}
 		else {
-			return Status.try_again;
+			return RoundStatus.try_again;
 		}
 	}
 	
@@ -65,10 +67,6 @@ public class GameRound {
 	public void setPigs(ArrayList<Pig> pigs) {
 		this.pigs = pigs;
 	}
-
-	public ArrayList<Oven> getOvens() {
-		return ovens;
-	}
 	
 	public void setScore(int score) {
 		this.score = score;
@@ -86,15 +84,15 @@ public class GameRound {
 		this.lives = lives;
 	}
 
-	public ArrayList<IGravity> getGravity_list() {
+	public ArrayList<ObjectWithGravityAura> getGravity_list() {
 		return gravity_list;
 	}
 
-	public void setGravity_list(ArrayList<IGravity> gravity_list) {
+	public void setGravity_list(ArrayList<ObjectWithGravityAura> gravity_list) {
 		this.gravity_list = gravity_list;
 	}
 
-	public void setOvens(ArrayList<Oven> ovens) {
-		this.ovens = ovens;
+	public void addOven(Oven oven) {
+		gravity_list.add(oven);
 	}
 }

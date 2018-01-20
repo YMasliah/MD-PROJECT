@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import bean.CollidableObject;
+import bean.IGravity;
 import bean.withgravity.Oven;
 import main.AngryBirds;
 
@@ -18,8 +20,10 @@ public class OvenView implements IComponents {
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			for(Oven oven : AngryBirds.GAMEMODE.getRound().getOvens()) {
-				g.drawImage(img, (int) oven.getPosX(), (int) oven.getPosY(), 40, 40, null);
+			for(IGravity oven : AngryBirds.GAMEMODE.getRound().getGravity_list()) {
+				if(oven instanceof Oven) {
+					g.drawImage(img, (int) ((CollidableObject) oven).getPosX(), (int) ((CollidableObject) oven).getPosY(), 40, 40, null);
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
