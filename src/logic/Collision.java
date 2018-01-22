@@ -6,6 +6,7 @@ import bean.CollidableObject;
 import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
 import bean.animal.Pig;
+import bean.obstacle.Wall;
 import bean.withgravity.Oven;
 import logic.CollisionReturnValue.CollisionTypes;
 
@@ -27,8 +28,8 @@ public class Collision {
 	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et blackhole
 	public ArrayList<CollisionReturnValue> CheckCollision() {
 		ArrayList<CollisionReturnValue> returnValue = new ArrayList<CollisionReturnValue>();
-		CollisionReturnValue temp;		
-		
+		CollisionReturnValue temp;
+
 		for (int i = 0; i < listeObjects.size(); i++) {
 			if (!(listeObjects.get(i) instanceof Bird)) {
 				continue;
@@ -52,6 +53,18 @@ public class Collision {
 					temp.setObjectJ(listeObjects.get(j));
 					returnValue.add(temp);
 					return returnValue;
+				} else if (listeObjects.get(j) instanceof Wall) {
+					if (listeObjects.get(j).getPosX() < listeObjects.get(i).getPosX()+35 && (listeObjects.get(j).getPosX()
+							+ (((Wall) listeObjects.get(j)).getWidth())) > listeObjects.get(i).getPosX()+35) {
+						if (listeObjects.get(j).getPosY() < listeObjects.get(i).getPosY()+18
+								&& (listeObjects.get(j).getPosY()
+										+ (((Wall) listeObjects.get(j)).getHeight())) > listeObjects.get(i).getPosY()+35) {
+							temp = new CollisionReturnValue();
+							temp.setCollisionType(CollisionTypes.WALL);
+							returnValue.add(temp);
+						}
+					}
+
 				} else if (listeObjects.get(j) instanceof Oven
 						&& Collision.distance(listeObjects.get(i), listeObjects.get(j)) < 100) {
 					temp = new CollisionReturnValue();
@@ -64,11 +77,11 @@ public class Collision {
 		}
 		return returnValue;
 	}
-	
+
 	public void addCollidableObject(CollidableObject object) {
 		listeObjects.add(object);
 	}
-	
+
 	public void addCollidableObjects(ArrayList<CollidableObject> objects) {
 		listeObjects.addAll(objects);
 	}
@@ -77,22 +90,9 @@ public class Collision {
 		listeObjects.clear();
 	}
 
-	/**
-	 * a supprimer
-	 * @param pigs
-	 */
-	public void addCollidablePigs(ArrayList<Pig> pigs) {
-		listeObjects.addAll(pigs);
-		
-	}
-	
-	/**
-	 * a supprimer
-	 * @param objects
-	 */
 	public void addCollidableGravityObject(ArrayList<ObjectWithGravityAura> objects) {
 		listeObjects.addAll(objects);
-		
+
 	}
 
 }

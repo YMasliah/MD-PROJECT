@@ -14,24 +14,24 @@ import main.AngryBirds;
  * @author masliah yann
  *
  */
-public class GraphicCoreWithMotionListener extends GraphicCore implements MouseListener, MouseMotionListener {	
+public class GraphicCoreWListener extends GraphicCore implements MouseListener, MouseMotionListener {	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private int posX, posY; // position de la souris lors de la sélection
 	
-	private GraphicCoreWithMotionListener() {
+	private GraphicCoreWListener() {
 		super();
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
 
-	private static GraphicCoreWithMotionListener INSTANCE;
+	private static GraphicCoreWListener INSTANCE;
 	
-	public synchronized static GraphicCoreWithMotionListener getGraphicCoreWithMotionListener() {
+	public synchronized static GraphicCoreWListener getGraphicCoreWithMotionListener() {
 		if (INSTANCE == null) {
-			INSTANCE = new GraphicCoreWithMotionListener();
+			INSTANCE = new GraphicCoreWListener();
 		}
 		return INSTANCE;
 	}

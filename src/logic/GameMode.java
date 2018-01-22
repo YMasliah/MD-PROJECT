@@ -7,12 +7,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.net.ssl.SSLEngineResult.Status;
-
 import bean.Animal;
+import bean.CollidableObject;
 import bean.IGravity;
 import bean.animal.Bird;
 import bean.animal.Pig;
+import bean.obstacle.Wall;
 import bean.withgravity.Oven;
 import logic.GameRound.RoundStatus;
 import main.AngryBirds;
@@ -65,6 +65,7 @@ public class GameMode extends GameCore {
 		AngryBirds.GRAPHICCORE.addElement("PIG");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
 		AngryBirds.GRAPHICCORE.addElement("OVEN");
+		AngryBirds.GRAPHICCORE.addElement("WALL");
 	}
 
 	/**
@@ -74,6 +75,7 @@ public class GameMode extends GameCore {
 		if (round == null || round.processing() == RoundStatus.round_lost) {
 			round = new GameRound(birdCountInit);
 			round.setBird(new Bird(100, 400));
+			round.addOtherObjects(new Wall());
 			round.addOven(new Oven(Math.random() * 500 + 100, 300,-0.2));
 			round.addOven(new Oven(Math.random() * 500 + 100, 300,-0.2));
 			round.setPigs(new ArrayList<>());
@@ -92,8 +94,8 @@ public class GameMode extends GameCore {
 		
 		collisionManager.clearManager();
 		collisionManager.addCollidableObject(round.getBird());
-		//y'as un probleme ici, j'arrive pas a faire une methode generique
-		collisionManager.addCollidablePigs(round.getPigs());
+		collisionManager.addCollidableObjects(round.getPigs());
+		collisionManager.addCollidableObjects(round.getOtherObjects());
 		collisionManager.addCollidableGravityObject(round.getGravity_list());
 		setMessage("Choisissez l'angle et la vitesse.");
 		setStatus(GameStatus.playable);
@@ -139,8 +141,8 @@ public class GameMode extends GameCore {
 					continue;
 				g.agis_sur(round.getBird());
 
-				for (Pig p : round.getPigs())
-					g.agis_sur(p);
+				for (CollidableObject p : round.getPigs())
+					g.agis_sur((Animal) p);
 
 			}
 			// redessine

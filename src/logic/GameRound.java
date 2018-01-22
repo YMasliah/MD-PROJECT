@@ -5,9 +5,9 @@ package logic;
 
 import java.util.ArrayList;
 
+import bean.CollidableObject;
 import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
-import bean.animal.Pig;
 import bean.withgravity.GameGravity;
 import bean.withgravity.Oven;
 import bean.withgravity.Vent;
@@ -27,7 +27,8 @@ public class GameRound {
 	private ArrayList<ObjectWithGravityAura> gravity_list = new ArrayList<>();
 	
 	private Bird bird;
-	private ArrayList<Pig> pigs = new ArrayList<>();
+	private ArrayList<CollidableObject> pigs = new ArrayList<>();
+	private ArrayList<CollidableObject> otherObjects = new ArrayList<>();
 	
 	public GameRound(int lives) {
 		this.lives = lives;
@@ -60,11 +61,11 @@ public class GameRound {
 		this.bird = bird;
 	}
 
-	public ArrayList<Pig> getPigs() {
+	public ArrayList<CollidableObject> getPigs() {
 		return pigs;
 	}
 
-	public void setPigs(ArrayList<Pig> pigs) {
+	public void setPigs(ArrayList<CollidableObject> pigs) {
 		this.pigs = pigs;
 	}
 	
@@ -94,5 +95,17 @@ public class GameRound {
 
 	public void addOven(Oven oven) {
 		gravity_list.add(oven);
+	}
+
+	public ArrayList<CollidableObject> getOtherObjects() {
+		return otherObjects;
+	}
+
+	public void addOtherObjects(CollidableObject otherObjects) {
+		this.otherObjects.add(otherObjects);
+	}
+	
+	public void setOtherObjects(ArrayList<CollidableObject> otherObjects) {
+		this.otherObjects = otherObjects;
 	}
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import bean.CollidableObject;
 import main.AngryBirds;
 
 public class PigView implements IComponents {
@@ -19,7 +20,7 @@ public class PigView implements IComponents {
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			for(bean.animal.Pig pig : AngryBirds.GAMEMODE.getRound().getPigs()) {
+			for(CollidableObject pig : AngryBirds.GAMEMODE.getRound().getPigs()) {
 				
 				g.drawImage(img, (int) pig.getPosX() - 20, (int) pig.getPosY() - 20, 40, 40, null);
 			}

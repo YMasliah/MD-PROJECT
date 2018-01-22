@@ -18,6 +18,8 @@ public class ComponentsFactory {
 			return new PigView();
 		} else if (componentsType.equalsIgnoreCase("OVEN")) {
 			return new OvenView();
+		} else if (componentsType.equalsIgnoreCase("WALL")) {
+			return new WallView();
 		}
 
 		return null;

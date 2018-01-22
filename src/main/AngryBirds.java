@@ -7,7 +7,7 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import graphic.GraphicCoreWithMotionListener;
+import graphic.GraphicCoreWListener;
 import logic.GameMode;
 
 /**
@@ -21,12 +21,12 @@ import logic.GameMode;
  */
 public class AngryBirds {
 
-	public static GraphicCoreWithMotionListener GRAPHICCORE;
+	public static GraphicCoreWListener GRAPHICCORE;
 	public static GameMode GAMEMODE;
 	
 	// met le jeu dans une fen�tre et rajoute son listener
 	public static void main(String[] args) {
-		GRAPHICCORE = GraphicCoreWithMotionListener.getGraphicCoreWithMotionListener();
+		GRAPHICCORE = GraphicCoreWListener.getGraphicCoreWithMotionListener();
 		GAMEMODE = GameMode.getGameMode();
 		Frame frame = new Frame("Oiseau pas content");
 

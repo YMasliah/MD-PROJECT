@@ -10,6 +10,8 @@ package bean;
 public abstract class ObjectWithGravityAura extends CollidableObject implements IGravity {
 	
 	private double gravity; // gravité
+	private double auraRange;
+	private boolean inAura;
 
 	public ObjectWithGravityAura() {
 		super();
@@ -33,5 +35,21 @@ public abstract class ObjectWithGravityAura extends CollidableObject implements 
 
 	public void setGravity(double gravity) {
 		this.gravity = gravity;
+	}
+
+	public double getAuraRange() {
+		return auraRange;
+	}
+
+	public void setAuraRange(double auraRange) {
+		this.auraRange = auraRange;
+	}
+
+	public boolean isInAura() {
+		return inAura;
+	}
+
+	public void setInAura(boolean inAura) {
+		this.inAura = inAura;
 	}
 }
