@@ -46,7 +46,17 @@ public class Oven extends ObjectWithGravityAura implements IComponents{
 	@Override
 	public void agis_sur(Animal a) {
 		if (a instanceof Bird){
-			a.setVelocityY(a.getVelocityY() + getGravity());
+			if(a.getPosX() > getPosX()){
+				a.setVelocityX(a.getVelocityX() + getGravity());
+			}else{
+				a.setVelocityX(a.getVelocityX() - getGravity());
+			}
+			if(a.getPosY() > getPosY()){
+				a.setVelocityY(a.getVelocityY() + getGravity());
+			}else{
+				a.setVelocityY(a.getVelocityY() - getGravity());
+			}
+			
 		}		
 	}
 }

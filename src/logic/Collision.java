@@ -25,7 +25,22 @@ public class Collision {
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
-	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et blackhole
+	public static boolean isInX(CollidableObject bird, CollidableObject object) {
+		if (object.getPosX() < bird.getPosX() + 35
+				&& (object.getPosX() + (((Wall) object).getWidth())) > bird.getPosX() - 10)
+			return true;
+		return false;
+	}
+
+	public static boolean isInY(CollidableObject bird, CollidableObject object) {
+		if (object.getPosY() < bird.getPosY() + 10
+				&& (object.getPosY() + (((Wall) object).getHeight())) > bird.getPosY() - 10)
+			return true;
+		return false;
+	}
+
+	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et
+	// blackhole
 	public ArrayList<CollisionReturnValue> CheckCollision() {
 		ArrayList<CollisionReturnValue> returnValue = new ArrayList<CollisionReturnValue>();
 		CollisionReturnValue temp;
@@ -54,11 +69,8 @@ public class Collision {
 					returnValue.add(temp);
 					return returnValue;
 				} else if (listeObjects.get(j) instanceof Wall) {
-					if (listeObjects.get(j).getPosX() < listeObjects.get(i).getPosX()+35 && (listeObjects.get(j).getPosX()
-							+ (((Wall) listeObjects.get(j)).getWidth())) > listeObjects.get(i).getPosX()+35) {
-						if (listeObjects.get(j).getPosY() < listeObjects.get(i).getPosY()+18
-								&& (listeObjects.get(j).getPosY()
-										+ (((Wall) listeObjects.get(j)).getHeight())) > listeObjects.get(i).getPosY()+35) {
+					if (isInX(listeObjects.get(i), listeObjects.get(j))) {
+						if (isInY(listeObjects.get(i), listeObjects.get(j))) {
 							temp = new CollisionReturnValue();
 							temp.setCollisionType(CollisionTypes.WALL);
 							returnValue.add(temp);
