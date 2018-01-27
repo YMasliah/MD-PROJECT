@@ -70,10 +70,11 @@ public class GameMode extends GameCore {
 			round = new GameRound(birdCountInit);
 			round.setBird(new Bird(100, 400));
 			round.addOtherObjects(new Wall());
+			round.addOtherObjects(new Wall(650,400,70,90));
 			round.addOven(new Oven(Math.random() * 500 + 100, 200, -0.1));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
-				round.getPigs().add(new Pig(100 + Math.random() * 450 + 200, 480 - Math.random() * 100));
+				round.getPigs().add(new Pig(250 + Math.random() * 400, 480 - i * 50));
 			}
 			setMessage("Choisissez l'angle et la vitesse.");
 			setStatus(GameStatus.playable);
@@ -81,7 +82,7 @@ public class GameMode extends GameCore {
 			round.setBird(new Bird(100, 400));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
-				round.getPigs().add(new Pig(Math.random() * 500 + 200, 480 - Math.random() * 100));
+				round.getPigs().add(new Pig(250 + Math.random() * 400, 480 - i * 50));
 			}
 			round.setLives(getBirdCountInit());
 			setMessage("Choisissez l'angle et la vitesse.");
