@@ -166,7 +166,6 @@ public class GameMode extends GameCore {
 			
 			if (Math.abs(round.getBird().getVelocityY()) < 0.15  && round.getBird().getPosY() > 460) {
 				setStatus(GameStatus.try_again);
-				System.out.println(round.getBird().getVelocityY());
 				round.setLives(round.getLives() - 1);
 				setMessage("Perdu : cliquez pour recommencer.");
 			}
