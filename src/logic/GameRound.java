@@ -10,7 +10,6 @@ import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
 import bean.withgravity.GameGravity;
 import bean.withgravity.Oven;
-import bean.withgravity.Vent;
 
 /**
  * @author masliah yann
@@ -34,7 +33,6 @@ public class GameRound {
 		this.lives = lives;
 		score = 0;
 		gravity_list.add(new GameGravity(0.1)); //
-		gravity_list.add(new Vent(0.1)); //
 	}
 	
 	/**
