@@ -27,8 +27,8 @@ public class Wall extends CollidableObject{
 	public Wall() {
 		setPosX(200);
 		setPosY(400);
-		this.width = 70;
-		this.height = 90;
+		this.width = 60;
+		this.height = 110;
 	}
 	
 	/* (non-Javadoc)
@@ -44,11 +44,11 @@ public class Wall extends CollidableObject{
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
 		//g.fillRect((int) getPosX(), (int) getPosY(), width, height);
-		File file = new File ("resources/images/wall.jpg");
+		File file = new File ("resources/images/wall.png");
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			g.drawImage(img, (int) getPosX()-10, (int) getPosY(), width, height, null);
+			g.drawImage(img, (int) getPosX()-10 , (int) getPosY(), width, height, null);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
