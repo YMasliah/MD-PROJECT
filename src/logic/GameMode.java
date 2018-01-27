@@ -129,13 +129,6 @@ public class GameMode extends GameCore {
 			round.getBird().setPosX(round.getBird().getVelocityX() + round.getBird().getPosX());
 			round.getBird().setPosY(round.getBird().getVelocityY() + round.getBird().getPosY());
 
-			if (Math.abs((int)round.getBird().getVelocityY()) == 0 && round.getBird().getPosY() > 470) {
-				setStatus(GameStatus.try_again);
-				round.setLives(round.getLives() - 1);
-				setMessage("Perdu : cliquez pour recommencer.");
-				return;
-			}
-
 			for (CollisionReturnValue col : collisionManager.CheckCollision()) {
 				switch (col.getCollisionType()) {
 				case OVEN:
@@ -170,6 +163,13 @@ public class GameMode extends GameCore {
 					g.agis_sur((Animal) p);
 
 			}
+			
+			if ((int)round.getBird().getVelocityY() == 0 && round.getBird().getPosY() > 470) {
+				setStatus(GameStatus.try_again);
+				round.setLives(round.getLives() - 1);
+				setMessage("Perdu : cliquez pour recommencer.");
+			}
+			
 			// redessine
 			AngryBirds.GRAPHICCORE.repaint();
 		}
