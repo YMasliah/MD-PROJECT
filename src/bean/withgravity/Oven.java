@@ -40,7 +40,7 @@ public class Oven extends ObjectWithGravityAura{
 	 */
 	@Override
 	public void draw(Graphics2D g) {
-		File file = new File ("resources/images/bird-oven.jpg");
+		File file = new File ("resources/images/oven.png");
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
