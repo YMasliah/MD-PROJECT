@@ -34,13 +34,16 @@ public class Bird extends Animal {
 	public void collisionWith(CollidableObject object) {
 		if (object == null) {
 			if (getPosX() < 25) {
-				setVelocityX(-getVelocityX());
+				setVelocityX(-getVelocityX()*0.7);
 			}
 			if (getPosX() > AngryBirds.GRAPHICCORE.getWidth() -25) {
-				setVelocityX(-getVelocityX());
+				setVelocityX(-getVelocityX()*0.7);
 			}
 			if (getPosY() < 0) {
-				setVelocityY(-getVelocityY());
+				setVelocityY(-getVelocityY()*0.7);
+			}
+			if (getPosY() > 480) {
+				setVelocityY(-getVelocityY()*0.7);
 			}
 		}
 

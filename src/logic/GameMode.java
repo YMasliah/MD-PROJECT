@@ -73,7 +73,7 @@ public class GameMode extends GameCore {
 			round = new GameRound(birdCountInit);
 			round.setBird(new Bird(100, 400));
 			round.addOtherObjects(new Wall());
-			round.addOven(new Oven(Math.random() * 500 + 100, 200,-0.1));
+			round.addOven(new Oven(Math.random() * 500 + 100, 200, -0.1));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
 				round.getPigs().add(new Pig(Math.random() * 500 + 200, 480 - Math.random() * 100));
@@ -88,12 +88,12 @@ public class GameMode extends GameCore {
 			}
 			setMessage("Choisissez l'angle et la vitesse.");
 			setStatus(GameStatus.playable);
-		} else if (round.processing() == RoundStatus.try_again && getStatus() == GameStatus.try_again ) {
+		} else if (round.processing() == RoundStatus.try_again && getStatus() == GameStatus.try_again) {
 			round.setBird(new Bird(100, 400));
 			setMessage("Choisissez l'angle et la vitesse.");
 			setStatus(GameStatus.playable);
 		}
-		
+
 		collisionManager.clearManager();
 		collisionManager.addCollidableObject(round.getBird());
 		collisionManager.addCollidableObjects(round.getPigs());
@@ -103,8 +103,20 @@ public class GameMode extends GameCore {
 	}
 
 	public void launchBird(int x, int y) {
-		round.getBird().setVelocityX((round.getBird().getPosX() - x) / getVelocityXPower());
-		round.getBird().setVelocityY((round.getBird().getPosY() - y) / getVelocityYPower());
+		double tempX = (round.getBird().getPosX() - x) / getVelocityXPower();
+		double tempY = (round.getBird().getPosY() - y) / getVelocityYPower();
+
+		if (tempX > 5)
+			tempX = 5;
+		else if (tempX < -5)
+			tempX = -5;
+		if (tempY > 10)
+			tempY = 10;
+		else if (tempY < -10)
+			tempY = -10;
+
+		round.getBird().setVelocityX(tempX);
+		round.getBird().setVelocityY(tempY);
 		setStatus(GameStatus.processing);
 		setMessage("L'oiseau prend sont envol");
 	}
@@ -116,17 +128,24 @@ public class GameMode extends GameCore {
 			round.getBird().setPosX(round.getBird().getVelocityX() + round.getBird().getPosX());
 			round.getBird().setPosY(round.getBird().getVelocityY() + round.getBird().getPosY());
 
-			for(CollisionReturnValue col : collisionManager.CheckCollision()) {
-				switch (col.getCollisionType()){
+			if (Math.abs((int)round.getBird().getVelocityY()) == 0 && round.getBird().getPosY() > 470) {
+				setStatus(GameStatus.try_again);
+				round.setLives(round.getLives() - 1);
+				setMessage("Perdu : cliquez pour recommencer.");
+				return;
+			}
+
+			for (CollisionReturnValue col : collisionManager.CheckCollision()) {
+				switch (col.getCollisionType()) {
 				case OVEN:
 					((Oven) col.getObjectJ()).agis_sur((Animal) col.getObjectI());
 					break;
 				case PIG:
 					round.getPigs().remove(round.getPigs().indexOf(((Pig) col.getObjectJ())));
-					if(round.processing() == RoundStatus.round_win) {
+					if (round.processing() == RoundStatus.round_win) {
 						setStatus(GameStatus.try_again);
 						setMessage("Gagn� : cliquez pour recommencer.");
-					}else {
+					} else {
 						roundProcessing();
 					}
 					round.setScore(round.getScore() + 1);
@@ -140,9 +159,9 @@ public class GameMode extends GameCore {
 					break;
 				}
 			}
-			
+
 			for (IGravity g : round.getGravity_list()) {
-				if(g instanceof Oven)
+				if (g instanceof Oven)
 					continue;
 				g.agis_sur(round.getBird());
 
