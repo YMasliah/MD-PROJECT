@@ -4,6 +4,11 @@
 package bean.obstacle;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import bean.CollidableObject;
 
@@ -22,8 +27,8 @@ public class Wall extends CollidableObject{
 	public Wall() {
 		setPosX(200);
 		setPosY(400);
-		this.width = 30;
-		this.height = 100;
+		this.width = 70;
+		this.height = 90;
 	}
 	
 	/* (non-Javadoc)
@@ -38,7 +43,17 @@ public class Wall extends CollidableObject{
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
-		g.fillRect((int) getPosX(), (int) getPosY(), width, height);
+		//g.fillRect((int) getPosX(), (int) getPosY(), width, height);
+		File file = new File ("resources/images/wall.jpg");
+		BufferedImage img;
+		try {
+			img = ImageIO.read(file);
+			g.drawImage(img, (int) getPosX()-10, (int) getPosY(), width, height, null);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public int getWidth() {
