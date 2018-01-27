@@ -98,7 +98,6 @@ public class Collision {
 
 	public void addCollidableGravityObject(ArrayList<ObjectWithGravityAura> objects) {
 		listeObjects.addAll(objects);
-
 	}
 
 	public ArrayList<CollidableObject> getListeObjects() {

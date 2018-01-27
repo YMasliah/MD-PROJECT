@@ -56,7 +56,7 @@ public abstract class GraphicCore extends Panel {
 			element.draw(g);
 		}
 		
-		// affichage à l'écran sans scintillement
+		// affichage a l'ecran sans scintillement
 		g2.drawImage(buffer, 0, 0, null);
 	}
 

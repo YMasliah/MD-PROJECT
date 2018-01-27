@@ -35,10 +35,6 @@ public class GameRound {
 		gravity_list.add(new GameGravity(0.1)); //
 	}
 	
-	/**
-	 * debut de partie
-	 * a refaire
-	 */
 	public RoundStatus processing() {
 		if(getPigs().size() == 0) {
 			return RoundStatus.round_win;
