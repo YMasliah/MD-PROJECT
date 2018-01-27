@@ -50,7 +50,9 @@ public abstract class GraphicCore extends Panel {
 			ComponentsFactory.getComponents(element).draw(g);
 		}
 		
-		for(CollidableObject element : AngryBirds.GAMEMODE.getCollisionList()) {
+		ArrayList<CollidableObject> temp =  (ArrayList<CollidableObject>) AngryBirds.GAMEMODE.getCollisionList().clone();
+		
+		for(CollidableObject element : temp) {
 			element.draw(g);
 		}
 		

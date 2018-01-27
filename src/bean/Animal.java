@@ -2,6 +2,10 @@ package bean;
 
 public abstract class Animal extends CollidableObject{
 
+	// informations relatives aux animaux
+	private double velocityX; 
+	private double velocityY;
+	
 	public Animal() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -10,7 +14,7 @@ public abstract class Animal extends CollidableObject{
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
-	private double velocityX, velocityY; // informations relatives a l'oiseau
+
 
 	public double getVelocityX() {
 		return velocityX;
