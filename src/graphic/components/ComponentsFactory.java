@@ -9,6 +9,9 @@ public class ComponentsFactory {
 			return new Decor();
 		} else if (componentsType.equalsIgnoreCase("MESSAGES")) {
 			return new Messages();
+		} else if (componentsType.equalsIgnoreCase("LIFE")) {
+			return new LifeView();
+
 		}
 		return null;
 	}

@@ -1,7 +1,5 @@
 package graphic.components;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,20 +9,26 @@ import javax.imageio.ImageIO;
 
 import main.AngryBirds;
 
-public class Background implements IComponents{
+public class LifeView implements IComponents {
 
+	@Override
 	public void draw(Graphics2D g) {
-
-		Dimension d = AngryBirds.GRAPHICCORE.getPreferredSize();
-		g.setColor(Color.WHITE);
-		File file = new File("resources/images/b1.png");
+		File file = new File("resources/images/life.png");
 		BufferedImage img;
+
 		try {
-			img = ImageIO.read(file);
-			g.drawImage(img, 0, (int) 0,(int) d.getWidth(),(int) d.getHeight(), null);
+			int pos = 10;
+			for (int i = 0; i < AngryBirds.GAMEMODE.getRound().getLives(); i++) {
+				img = ImageIO.read(file);
+				g.drawImage(img, pos, 30, null);
+				pos += 40;
+				
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 }
