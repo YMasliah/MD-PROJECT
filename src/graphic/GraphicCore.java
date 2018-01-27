@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Panel;
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public abstract class GraphicCore extends Panel {
 
 	// dessine le contenu de l'écran dans un buffer puis copie le buffer à
 	// l'écran
+	@SuppressWarnings("unchecked")
 	public void paint(Graphics g2) {
 		if (buffer == null)
 			buffer = createImage(800, 600);
@@ -49,8 +51,8 @@ public abstract class GraphicCore extends Panel {
 		for(String element : elements) {
 			ComponentsFactory.getComponents(element).draw(g);
 		}
-		
-		for(CollidableObject element : AngryBirds.GAMEMODE.getCollisionList()) {
+		ArrayList<CollidableObject> clonedCollisionList = (ArrayList<CollidableObject>) AngryBirds.GAMEMODE.getCollisionList().clone();
+		for(CollidableObject element : clonedCollisionList) {
 			element.draw(g);
 		}
 		
