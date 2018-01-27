@@ -41,6 +41,7 @@ public abstract class GraphicCore extends Panel {
 
 	// dessine le contenu de l'écran dans un buffer puis copie le buffer à
 	// l'écran
+	@SuppressWarnings("unchecked")
 	public void paint(Graphics g2) {
 		if (buffer == null)
 			buffer = createImage(800, 600);
@@ -50,9 +51,8 @@ public abstract class GraphicCore extends Panel {
 			ComponentsFactory.getComponents(element).draw(g);
 		}
 		
-		ArrayList<CollidableObject> temp =  (ArrayList<CollidableObject>) AngryBirds.GAMEMODE.getCollisionList().clone();
-		
-		for(CollidableObject element : temp) {
+		ArrayList<CollidableObject> clonedCollisionList = (ArrayList<CollidableObject>) AngryBirds.GAMEMODE.getCollisionList().clone();
+		for(CollidableObject element : clonedCollisionList) {
 			element.draw(g);
 		}
 		
