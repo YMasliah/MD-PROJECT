@@ -70,7 +70,7 @@ public class GameMode extends GameCore {
 			round = new GameRound(birdCountInit);
 			round.setBird(new Bird(100, 400));
 			round.addOtherObjects(new Wall());
-			round.addOtherObjects(new Wall(650,400,70,90));
+			round.addOtherObjects(new Wall(650,400,60,110));
 			round.addOven(new Oven(Math.random() * 500 + 100, 200, -0.1));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
