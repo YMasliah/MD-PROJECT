@@ -62,6 +62,7 @@ public class GameMode extends GameCore {
 		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
 		AngryBirds.GRAPHICCORE.addElement("DECOR");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
+		AngryBirds.GRAPHICCORE.addElement("LIFE");
 	}
 
 	/**
