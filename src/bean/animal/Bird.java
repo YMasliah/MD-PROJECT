@@ -20,8 +20,6 @@ import main.AngryBirds;
  *
  */
 public class Bird extends Animal {
-
-	boolean isdead = false;
 	
 	public Bird() {
 		super();
@@ -35,7 +33,7 @@ public class Bird extends Animal {
 
 	public void collisionWith(CollidableObject object){
 		if (object == null) {
-			isdead= true;
+			
 		}
 		
 	}
@@ -47,9 +45,6 @@ public class Bird extends Animal {
 	 */
 	@Override
 	public void draw(Graphics2D g) {
-
-		if(isdead)
-			return;
 		
 		File fast = new File("resources/images/burning-bird.png");
 		File slow = new File("resources/images/raw-bird.png");
