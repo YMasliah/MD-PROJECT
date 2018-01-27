@@ -61,11 +61,7 @@ public class GameMode extends GameCore {
 	private void init() {
 		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
 		AngryBirds.GRAPHICCORE.addElement("DECOR");
-		AngryBirds.GRAPHICCORE.addElement("BIRD");
-		AngryBirds.GRAPHICCORE.addElement("PIG");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
-		AngryBirds.GRAPHICCORE.addElement("OVEN");
-		AngryBirds.GRAPHICCORE.addElement("WALL");
 	}
 
 	/**
@@ -178,5 +174,9 @@ public class GameMode extends GameCore {
 
 	public void setRound(GameRound round) {
 		this.round = round;
+	}
+
+	public ArrayList<CollidableObject> getCollisionList() {
+		return collisionManager.getListeObjects();
 	}
 }

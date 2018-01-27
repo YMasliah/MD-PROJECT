@@ -39,8 +39,6 @@ public class Collision {
 		return false;
 	}
 
-	// 0 = aucune collision, 1 = collision bird et pig, 2 collison bird et
-	// blackhole
 	public ArrayList<CollisionReturnValue> CheckCollision() {
 		ArrayList<CollisionReturnValue> returnValue = new ArrayList<CollisionReturnValue>();
 		CollisionReturnValue temp;
@@ -51,6 +49,7 @@ public class Collision {
 			}
 			if (listeObjects.get(i).getPosX() < 20 || listeObjects.get(i).getPosX() > 780
 					|| listeObjects.get(i).getPosY() < 0 || listeObjects.get(i).getPosY() > 480) {
+				listeObjects.get(i).collisionWith(null);
 				temp = new CollisionReturnValue();
 				temp.setCollisionType(CollisionTypes.WALL);
 				returnValue.add(temp);
@@ -105,6 +104,10 @@ public class Collision {
 	public void addCollidableGravityObject(ArrayList<ObjectWithGravityAura> objects) {
 		listeObjects.addAll(objects);
 
+	}
+
+	public ArrayList<CollidableObject> getListeObjects() {
+		return listeObjects;
 	}
 
 }

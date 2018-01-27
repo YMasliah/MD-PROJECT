@@ -19,7 +19,7 @@ public class GraphicCoreWListener extends GraphicCore implements MouseListener, 
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int posX, posY; // position de la souris lors de la sélection
+	private int posX, posY; // position de la souris lors de la selection
 	
 	private GraphicCoreWListener() {
 		super();
@@ -45,7 +45,7 @@ public class GraphicCoreWListener extends GraphicCore implements MouseListener, 
 		repaint();
 	}
 	
-	// gestion des ï¿½vï¿½nements souris
+	// gestion des evenements souris
 	public void mouseClicked(MouseEvent e) {
 	}
 

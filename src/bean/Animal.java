@@ -1,8 +1,6 @@
 package bean;
 
-import graphic.components.IComponents;
-
-public abstract class Animal extends CollidableObject implements IComponents{
+public abstract class Animal extends CollidableObject{
 
 	public Animal() {
 		super();
@@ -12,7 +10,7 @@ public abstract class Animal extends CollidableObject implements IComponents{
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
-	private double velocityX, velocityY; // informations relatives � l'oiseau
+	private double velocityX, velocityY; // informations relatives a l'oiseau
 
 	public double getVelocityX() {
 		return velocityX;

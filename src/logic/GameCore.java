@@ -23,7 +23,7 @@ public abstract class GameCore {
 	private final int velocityXPower = 20;
 	private final int velocityYPower = 20;
 
-	private String message; // message � afficher en haut de l'�cran
+	private String message; // message a afficher en haut de l'ecran
 	private GameStatus status;
 
 	public GameStatus getStatus() {

@@ -3,13 +3,13 @@
  */
 package bean;
 
-import logic.Collision;
+import graphic.components.IComponents;
 
 /**
  * @author masliah yann
  *
  */
-public abstract class CollidableObject {
+public abstract class CollidableObject implements IComponents{
 	private double posX;
 	private double posY;
 	
@@ -23,7 +23,7 @@ public abstract class CollidableObject {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void collisionWith(CollidableObject a, Collision c){}
+	public void collisionWith(CollidableObject object){}
 	
 	public double getPosY() {
 		return posY;

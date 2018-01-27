@@ -10,7 +10,9 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.util.ArrayList;
 
+import bean.CollidableObject;
 import graphic.components.ComponentsFactory;
+import main.AngryBirds;
 
 /**
  * @author masliah yann
@@ -44,7 +46,11 @@ public abstract class GraphicCore extends Panel {
 		for(String element : elements) {
 			ComponentsFactory.getComponents(element).draw(g);
 		}
-
+		
+		for(CollidableObject element : AngryBirds.GAMEMODE.getCollisionList()) {
+			element.draw(g);
+		}
+		
 		// affichage à l'écran sans scintillement
 		g2.drawImage(buffer, 0, 0, null);
 	}

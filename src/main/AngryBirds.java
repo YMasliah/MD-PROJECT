@@ -24,7 +24,7 @@ public class AngryBirds {
 	public static GraphicCoreWListener GRAPHICCORE;
 	public static GameMode GAMEMODE;
 	
-	// met le jeu dans une fen�tre et rajoute son listener
+	// met le jeu dans une fenetre et rajoute son listener
 	public static void main(String[] args) {
 		GRAPHICCORE = GraphicCoreWListener.getGraphicCoreWithMotionListener();
 		GAMEMODE = GameMode.getGameMode();

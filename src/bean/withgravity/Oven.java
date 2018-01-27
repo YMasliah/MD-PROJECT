@@ -4,18 +4,21 @@
 package bean.withgravity;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import bean.Animal;
 import bean.ObjectWithGravityAura;
 import bean.animal.Bird;
-import graphic.components.ComponentsFactory;
-import graphic.components.IComponents;
 
 /**
  * @author arthur
  *
  */
-public class Oven extends ObjectWithGravityAura implements IComponents{
+public class Oven extends ObjectWithGravityAura{
 	
 	public Oven() {
 		super();
@@ -37,7 +40,16 @@ public class Oven extends ObjectWithGravityAura implements IComponents{
 	 */
 	@Override
 	public void draw(Graphics2D g) {
-		ComponentsFactory.getComponents("OVEN");		
+		File file = new File ("resources/images/bird-oven.jpg");
+		BufferedImage img;
+		try {
+			img = ImageIO.read(file);
+			g.drawImage(img, (int) getPosX(), (int) getPosY(), 40, 40, null);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	/* (non-Javadoc)

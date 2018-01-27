@@ -23,7 +23,7 @@ public class GameRound {
 	}
 	
 	private int lives;
-	private int score; // nombre de fois o� le joueur a gagn�
+	private int score; // nombre de fois ou le joueur a gagnee
 	private ArrayList<ObjectWithGravityAura> gravity_list = new ArrayList<>();
 	
 	private Bird bird;
