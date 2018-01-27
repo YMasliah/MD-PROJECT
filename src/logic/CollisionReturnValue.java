@@ -5,7 +5,7 @@ import bean.CollidableObject;
 public class CollisionReturnValue {
 
 	public enum CollisionTypes {
-		PIG, WALL, OVEN
+		PIG, WALL, OVEN_AURA, OVEN
 	}
 	
 	private CollisionTypes collisionType;

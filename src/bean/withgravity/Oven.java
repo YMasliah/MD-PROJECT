@@ -44,7 +44,7 @@ public class Oven extends ObjectWithGravityAura{
 		BufferedImage img;
 		try {
 			img = ImageIO.read(file);
-			g.drawImage(img, (int) getPosX(), (int) getPosY(), 40, 40, null);
+			g.drawImage(img, (int) getPosX()-15, (int) getPosY()-15, 40, 40, null);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

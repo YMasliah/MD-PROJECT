@@ -72,13 +72,20 @@ public class Collision {
 					}
 
 				} else if (listeObjects.get(j) instanceof Oven
-						&& Collision.distance(listeObjects.get(i), listeObjects.get(j)) < 100) {
+						&& Collision.distance(listeObjects.get(i), listeObjects.get(j)) < 25) {
 					temp = new CollisionReturnValue();
 					temp.setCollisionType(CollisionTypes.OVEN);
 					temp.setObjectI(listeObjects.get(i));
 					temp.setObjectJ(listeObjects.get(j));
 					returnValue.add(temp);
-				}
+				} else if (listeObjects.get(j) instanceof Oven
+						&& Collision.distance(listeObjects.get(i), listeObjects.get(j)) < 100) {
+					temp = new CollisionReturnValue();
+					temp.setCollisionType(CollisionTypes.OVEN_AURA);
+					temp.setObjectI(listeObjects.get(i));
+					temp.setObjectJ(listeObjects.get(j));
+					returnValue.add(temp);
+				} 
 			}
 		}
 		return returnValue;
