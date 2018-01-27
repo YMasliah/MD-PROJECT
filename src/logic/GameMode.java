@@ -77,14 +77,20 @@ public class GameMode extends GameCore {
 			for (int i = 0; i < pigCountInit; i++) {
 				round.getPigs().add(new Pig(Math.random() * 500 + 200, 480 - Math.random() * 100));
 			}
+			setMessage("Choisissez l'angle et la vitesse.");
+			setStatus(GameStatus.playable);
 		} else if (round.processing() == RoundStatus.round_win) {
 			round.setBird(new Bird(100, 400));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
 				round.getPigs().add(new Pig(Math.random() * 500 + 200, 480 - Math.random() * 100));
 			}
-		} else if (round.processing() == RoundStatus.try_again) {
+			setMessage("Choisissez l'angle et la vitesse.");
+			setStatus(GameStatus.playable);
+		} else if (round.processing() == RoundStatus.try_again && getStatus() == GameStatus.try_again ) {
 			round.setBird(new Bird(100, 400));
+			setMessage("Choisissez l'angle et la vitesse.");
+			setStatus(GameStatus.playable);
 		}
 		
 		collisionManager.clearManager();
@@ -92,8 +98,7 @@ public class GameMode extends GameCore {
 		collisionManager.addCollidableObjects(round.getPigs());
 		collisionManager.addCollidableObjects(round.getOtherObjects());
 		collisionManager.addCollidableGravityObject(round.getGravity_list());
-		setMessage("Choisissez l'angle et la vitesse.");
-		setStatus(GameStatus.playable);
+
 	}
 
 	public void launchBird(int x, int y) {
@@ -117,8 +122,12 @@ public class GameMode extends GameCore {
 					break;
 				case PIG:
 					round.getPigs().remove(round.getPigs().indexOf(((Pig) col.getObjectJ())));
-					setStatus(GameStatus.try_again);
-					setMessage("Gagn� : cliquez pour recommencer.");
+					if(round.processing() == RoundStatus.round_win) {
+						setStatus(GameStatus.try_again);
+						setMessage("Gagn� : cliquez pour recommencer.");
+					}else {
+						roundProcessing();
+					}
 					round.setScore(round.getScore() + 1);
 					break;
 				case WALL:

@@ -47,9 +47,10 @@ public class Collision {
 			if (!(listeObjects.get(i) instanceof Bird)) {
 				continue;
 			}
-			if (listeObjects.get(i).getPosX() < 20 || listeObjects.get(i).getPosX() > 780
-					|| listeObjects.get(i).getPosY() < 0 || listeObjects.get(i).getPosY() > 480) {
+			if(listeObjects.get(i).getPosY() < 0 || listeObjects.get(i).getPosX() < 20 || listeObjects.get(i).getPosX() > 780) {
 				listeObjects.get(i).collisionWith(null);
+			}
+			if (listeObjects.get(i).getPosY() > 480) {
 				temp = new CollisionReturnValue();
 				temp.setCollisionType(CollisionTypes.WALL);
 				returnValue.add(temp);

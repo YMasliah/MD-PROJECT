@@ -20,7 +20,7 @@ import main.AngryBirds;
  *
  */
 public class Bird extends Animal {
-	
+
 	public Bird() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -31,13 +31,21 @@ public class Bird extends Animal {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void collisionWith(CollidableObject object){
+	public void collisionWith(CollidableObject object) {
 		if (object == null) {
-			
+			if (getPosX() < 25) {
+				setVelocityX(-getVelocityX());
+			}
+			if (getPosX() > AngryBirds.GRAPHICCORE.getWidth() -25) {
+				setVelocityX(-getVelocityX());
+			}
+			if (getPosY() < 0) {
+				setVelocityY(-getVelocityY());
+			}
 		}
-		
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -45,7 +53,7 @@ public class Bird extends Animal {
 	 */
 	@Override
 	public void draw(Graphics2D g) {
-		
+
 		File fast = new File("resources/images/burning-bird.png");
 		File slow = new File("resources/images/raw-bird.png");
 		BufferedImage img;

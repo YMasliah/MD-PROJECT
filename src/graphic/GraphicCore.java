@@ -23,6 +23,9 @@ public abstract class GraphicCore extends Panel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private int height = 600;
+	private int width = 800;
 
 	private Image buffer; // image pour le rendu hors écran
 	private ArrayList<String> elements;
@@ -57,7 +60,7 @@ public abstract class GraphicCore extends Panel {
 
 	// taille de la fenêtre
 	public Dimension getPreferredSize() {
-		return new Dimension(800, 600);
+		return new Dimension(width, height);
 	}
 	
 	public ArrayList<String> getElements() {
@@ -70,5 +73,13 @@ public abstract class GraphicCore extends Panel {
 	
 	public void clearElements() {
 		elements.clear();
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
 	}
 }
