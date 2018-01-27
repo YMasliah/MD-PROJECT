@@ -40,7 +40,7 @@ public class GameMode extends GameCore {
 		pigCountInit = 2;
 		birdCountInit = 4;
 		thread = new Thread(new Runner());
-		init();
+		initGraphicCore();
 		roundProcessing();
 		thread.start();
 	}
@@ -58,16 +58,13 @@ public class GameMode extends GameCore {
 		return INSTANCE;
 	}
 
-	private void init() {
+	private void initGraphicCore() {
 		AngryBirds.GRAPHICCORE.addElement("BACKGROUND");
 		AngryBirds.GRAPHICCORE.addElement("DECOR");
 		AngryBirds.GRAPHICCORE.addElement("MESSAGES");
 		AngryBirds.GRAPHICCORE.addElement("LIFE");
 	}
 
-	/**
-	 * debut de partie a refaire
-	 */
 	public void roundProcessing() {
 		if (round == null || round.processing() == RoundStatus.round_lost) {
 			round = new GameRound(birdCountInit);
