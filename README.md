@@ -3,7 +3,7 @@
 ## Execute
 
 1. mvn package
-2. java -cp .\target\MD-PROJECT-0.0.1-SNAPSHOT.jar main.AngryBirds
+2. java -cp ./target/MD-PROJECT-0.0.1-SNAPSHOT.jar main.AngryBirds
 
 ## Team
 
