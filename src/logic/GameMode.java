@@ -79,6 +79,7 @@ public class GameMode extends GameCore {
 			setMessage("Choisissez l'angle et la vitesse.");
 			setStatus(GameStatus.playable);
 		} else if (round.processing() == RoundStatus.round_win) {
+			round.addOven(new Oven(Math.random() * 500 + 100, 200, -0.1));
 			round.setBird(new Bird(100, 400));
 			round.setPigs(new ArrayList<>());
 			for (int i = 0; i < pigCountInit; i++) {
@@ -117,7 +118,7 @@ public class GameMode extends GameCore {
 		round.getBird().setVelocityX(tempX);
 		round.getBird().setVelocityY(tempY);
 		setStatus(GameStatus.processing);
-		setMessage("L'oiseau prend sont envol");
+		setMessage("Le poulet cru prend son envol");
 	}
 
 	public void work() {
@@ -141,7 +142,7 @@ public class GameMode extends GameCore {
 					round.getPigs().remove(round.getPigs().indexOf(((Pig) col.getObjectJ())));
 					if (round.processing() == RoundStatus.round_win) {
 						setStatus(GameStatus.try_again);
-						setMessage("Gagn� : cliquez pour recommencer.");
+						setMessage("Win : cliquez pour recommencer.");
 					} else {
 						roundProcessing();
 					}
