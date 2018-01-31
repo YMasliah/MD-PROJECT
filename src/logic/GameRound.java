@@ -90,6 +90,13 @@ public class GameRound {
 	public void addOven(Oven oven) {
 		gravity_list.add(oven);
 	}
+	public void clearOvens(){
+		for (int i = 0 ; i < gravity_list.size() ; i++) {
+			if (gravity_list.get(i) instanceof Oven) {
+				gravity_list.remove(i);
+			}
+		}
+	}
 
 	public ArrayList<CollidableObject> getOtherObjects() {
 		return otherObjects;

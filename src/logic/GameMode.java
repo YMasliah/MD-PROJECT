@@ -79,6 +79,7 @@ public class GameMode extends GameCore {
 			setMessage("Choisissez l'angle et la vitesse.");
 			setStatus(GameStatus.playable);
 		} else if (round.processing() == RoundStatus.round_win) {
+			round.clearOvens();
 			round.addOven(new Oven(Math.random() * 500 + 100, 200, -0.1));
 			round.setBird(new Bird(100, 400));
 			round.setPigs(new ArrayList<>());
